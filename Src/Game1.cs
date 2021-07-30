@@ -31,7 +31,7 @@ namespace Tetris.Src
 
             input = new Input();
 
-            grid = new Grid(new Location(33, 40));
+            grid = new Grid(new Location(12, 30));
 
             base.Initialize();
         }
