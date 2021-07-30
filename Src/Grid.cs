@@ -9,7 +9,7 @@ namespace Tetris.Src
 {
     public enum CellMembers
     {
-        empty, block
+        empty, block, wall
     }
 
     public class Grid
@@ -18,27 +18,24 @@ namespace Tetris.Src
 
         public Color[,] colours;
 
-        private readonly int cellNum;
+        private readonly Location cellMN;
 
-        public Grid(int cellNum)
+        public Grid(Location cellMN)
         {
-            this.cellNum = cellNum;
+            this.cellMN = cellMN;
 
-            BuildGrid(cellNum);
-
-            gridValues[(int)MathF.Floor(cellNum / 2) - 2, (int)MathF.Floor(cellNum / 2) - 2] = CellMembers.bike;
-            gridValues[(int)MathF.Ceiling(cellNum / 2) + 1, (int)MathF.Ceiling(cellNum / 2) + 1] = CellMembers.bike;
+            BuildGrid(cellMN);
         }
 
-        private void BuildGrid(int cellNum)
+        private void BuildGrid(Location cellMN)
         {
 
-            gridValues = new CellMembers[cellNum, cellNum];
-            colours = new Color[cellNum, cellNum];
+            gridValues = new CellMembers[cellMN.x, cellMN.y];
+            colours = new Color[cellMN.x, cellMN.y];
 
-            for (int i = 0; i < cellNum; i++)
+            for (int i = 0; i < cellMN.x; i++)
             {
-                for (int j = 0; j < cellNum; j++)
+                for (int j = 0; j < cellMN.y; j++)
                 {
                     gridValues[i, j] = CellMembers.empty;
 
@@ -51,17 +48,17 @@ namespace Tetris.Src
         {
             int cellLen = GetCellLen();
 
-            var borderPos = Constants.GridToScreenCoords(new Vector2(0, 0), cellNum);
+            var borderPos = Constants.GridToScreenCoords(new Vector2(0, 0), cellMN);
 
-            sb.DrawRectangle(borderPos.X, borderPos.Y, cellLen * cellNum, cellLen * cellNum, Color.White);
+            sb.DrawRectangle(borderPos.X, borderPos.Y, cellLen * cellMN.x, cellLen * cellMN.y, Color.White);
 
-            for (int i = 0; i < cellNum; i++)
+            for (int i = 0; i < cellMN.x; i++)
             {
-                for (int j = 0; j < cellNum; j++)
+                for (int j = 0; j < cellMN.y; j++)
                 {
-                    var screenPos = Constants.GridToScreenCoords(new Vector2(i, j), cellNum);
+                    var screenPos = Constants.GridToScreenCoords(new Vector2(i, j), cellMN);
 
-                    //sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.White);
+                    sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.White);
 
                     sb.FillRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, colours[i, j]);
                 }
@@ -70,7 +67,7 @@ namespace Tetris.Src
 
         public void SetCell(int i, int j, CellMembers cell, Color colour)
         {
-            if ((i < cellNum && i >= 0) && (j < cellNum && j >= 0))
+            if ((i < cellMN.x && i >= 0) && (j < cellMN.y && j >= 0))
             {
                 gridValues[i, j] = cell;
                 colours[i, j] = colour;
@@ -83,7 +80,7 @@ namespace Tetris.Src
 
         public CellMembers GetCell(int i, int j)
         {
-            if (i < 0 || j < 0 || i > cellNum - 1 || j > cellNum - 1)
+            if (i < 0 || j < 0 || i > cellMN.x - 1 || j > cellMN.y - 1)
             {
                 return CellMembers.wall;
             }
@@ -92,18 +89,30 @@ namespace Tetris.Src
 
         public int GetCellLen()
         {
-            int minDim = (int)MathF.Round(MathF.Min(Constants.Screen.X, Constants.Screen.Y));
-            return (int)MathF.Floor((float)minDim / cellNum);
+            int minDim;
+            int minMN;
+            int cellLen;
+            if (Constants.Screen.X / cellMN.x >= Constants.Screen.Y / cellMN.y)
+            {
+                minDim = (int)Constants.Screen.Y;
+                minMN = cellMN.y;
+            }
+            else
+            {
+                minDim = (int)Constants.Screen.X;
+                minMN = cellMN.x;
+            }
+            return cellLen = (int)MathF.Floor((float)minDim / minMN);
         }
 
-        public int GetCellNum()
+        public Location GetCellNum()
         {
-            return cellNum;
+            return cellMN;
         }
 
         public bool InBounds(Location id)
         {
-            return 0 <= id.x && id.x < cellNum && 0 <= id.y && id.y < cellNum;
+            return 0 <= id.x && id.x < cellMN.x && 0 <= id.y && id.y < cellMN.y;
         }
 
         public List<Location> Neighbors(Location cell)

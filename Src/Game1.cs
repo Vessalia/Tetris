@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 
 namespace Tetris.Src
 {
@@ -8,6 +9,8 @@ namespace Tetris.Src
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private Grid grid;
 
         private GameState gameState;
 
@@ -27,6 +30,8 @@ namespace Tetris.Src
             _graphics.ApplyChanges();
 
             input = new Input();
+
+            grid = new Grid(new Location(33, 40));
 
             base.Initialize();
         }
@@ -49,9 +54,14 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Navy);
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+            grid.DrawGrid(_spriteBatch);
+
+            _spriteBatch.DrawLine(Constants.Screen.X / 2, 0, Constants.Screen.X / 2, Constants.Screen.Y, Color.Orange);
+            _spriteBatch.DrawLine(0, Constants.Screen.Y / 2, Constants.Screen.X, Constants.Screen.Y / 2, Color.Orange);
 
             _spriteBatch.End();
 
