@@ -31,7 +31,7 @@ namespace Tetris.Src
 
             input = new Input();
 
-            grid = new Grid(new Location(12, 30));
+            grid = new Grid(new Location(10, 20));
 
             base.Initialize();
         }
@@ -39,8 +39,6 @@ namespace Tetris.Src
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
