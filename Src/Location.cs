@@ -6,7 +6,7 @@ namespace Tetris.Src
 {
     public struct Location
     {
-        public readonly int x, y;
+        public int x, y;
 
         public Location(int x, int y)
         {

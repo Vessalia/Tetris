@@ -27,7 +27,7 @@ namespace Tetris.Src
                 {false, false, false, false },
                 {false, true, true, true },
                 {false, false, true, false },
-                {false, false, true, false }
+                {false, false, false, false }
             };
 
         private static bool[,] sShape =
@@ -48,7 +48,7 @@ namespace Tetris.Src
 
         private static bool[,] jShape =
             {
-                {false, false, true, false },
+                {false, false, false, false },
                 {false, false, true, false },
                 {false, false, true, false },
                 {false, true, true, false }
@@ -56,37 +56,43 @@ namespace Tetris.Src
 
         private static bool[,] lShape =
             {
+                {false, false, false, false },
                 {false, true, false, false },
                 {false, true, false, false },
-                {false, true, false, false },
-                {false, true, false, false }
+                {false, true, true, false }
             };
 
         public static Block CreateIBlock(Location pos)
         {
             return new Block(pos, iShape);
         }
+
         public static Block CreateOBlock(Location pos)
         {
             return new Block(pos, oShape);
         }
+
         public static Block CreateTBlock(Location pos)
         {
             return new Block(pos, tShape);
         }
+
         public static Block CreateSBlock(Location pos)
         {
             return new Block(pos, sShape);
         }
+
         public static Block CreateZBlock(Location pos)
         {
             return new Block(pos, zShape);
         }
+
         public static Block CreateJBlock(Location pos)
         {
             return new Block(pos, jShape);
         }
-        public static Block CreateILBlock(Location pos)
+
+        public static Block CreateLBlock(Location pos)
         {
             return new Block(pos, lShape);
         }

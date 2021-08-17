@@ -12,7 +12,7 @@ namespace Tetris.Src
 
         public static readonly Vector2 Screen = new Vector2(Width, Height);
 
-        public static Vector2 GridToScreenCoords(Vector2 gridIndicies, Location cellMN) /* Method needs to be updated for an m =/= n grid */
+        public static Vector2 GridToScreenCoords(Location gridIndicies, Location cellMN) /* Method needs to be updated for an m =/= n grid */
         {
             var gridPos = new Vector2();
             int minDim;
@@ -31,8 +31,8 @@ namespace Tetris.Src
 
             float cellFloor = (float)minDim / minMN - (int)MathF.Floor((float)minDim / minMN);
 
-            gridPos.X = (Constants.Screen.X - cellMN.x * cellLen) / 2 + gridIndicies.X * cellLen;
-            gridPos.Y = (Constants.Screen.Y - cellMN.y * cellLen) / 2 + gridIndicies.Y * cellLen;
+            gridPos.X = (Constants.Screen.X - cellMN.x * cellLen) / 2 + gridIndicies.x * cellLen;
+            gridPos.Y = (Constants.Screen.Y - cellMN.y * cellLen) / 2 + gridIndicies.y * cellLen;
 
             return gridPos;
         }

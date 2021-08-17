@@ -48,7 +48,7 @@ namespace Tetris.Src
         {
             int cellLen = GetCellLen();
 
-            var borderPos = Constants.GridToScreenCoords(new Vector2(0, 0), cellMN);
+            var borderPos = Constants.GridToScreenCoords(new Location(0, 0), cellMN);
 
             sb.DrawRectangle(borderPos.X, borderPos.Y, cellLen * cellMN.x, cellLen * cellMN.y, Color.White);
 
@@ -56,7 +56,7 @@ namespace Tetris.Src
             {
                 for (int j = 0; j < cellMN.y; j++)
                 {
-                    var screenPos = Constants.GridToScreenCoords(new Vector2(i, j), cellMN);
+                    var screenPos = Constants.GridToScreenCoords(new Location(i, j), cellMN);
 
                     sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.White);
 
@@ -105,7 +105,7 @@ namespace Tetris.Src
             return cellLen = (int)MathF.Floor((float)minDim / minMN);
         }
 
-        public Location GetCellNum()
+        public Location GetCellMN()
         {
             return cellMN;
         }
