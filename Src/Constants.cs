@@ -29,8 +29,6 @@ namespace Tetris.Src
             }
             int cellLen = (int)MathF.Floor((float)minDim / minMN);
 
-            float cellFloor = (float)minDim / minMN - (int)MathF.Floor((float)minDim / minMN);
-
             gridPos.X = (Constants.Screen.X - cellMN.x * cellLen) / 2 + gridIndicies.x * cellLen;
             gridPos.Y = (Constants.Screen.Y - cellMN.y * cellLen) / 2 + gridIndicies.y * cellLen;
 

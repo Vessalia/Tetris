@@ -23,5 +23,25 @@ namespace Tetris.Src
         {
             return a.x != b.x || a.y != b.y;
         }
+
+        public static Location operator +(Location a, Location b)
+        {
+            return new Location(a.x + b.x, a.y + b.y);
+        }
+
+        public static Location operator -(Location a, Location b)
+        {
+            return new Location(a.x - b.x, a.y - b.y);
+        }
+
+        public static Location operator *(Location a, Location b)
+        {
+            return new Location(a.x * b.x, a.y * b.y);
+        }
+
+        public static Location operator /(Location a, Location b)
+        {
+            return new Location(a.x / b.x, a.y / b.y);
+        }
     }
 }

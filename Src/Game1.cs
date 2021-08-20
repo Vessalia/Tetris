@@ -17,6 +17,8 @@ namespace Tetris.Src
 
         private List<Block> blocks;
 
+        private Controller controller;
+
         public static Input input;
 
         private float dt;
@@ -46,6 +48,8 @@ namespace Tetris.Src
             Block jBlock = ShapeBuilder.CreateJBlock(new Location(4, 8));
             Block lBlock = ShapeBuilder.CreateLBlock(new Location(0, 12));
 
+            controller = new Controller(input);
+
             blocks = new List<Block>
             { 
                 iBlock,
@@ -73,6 +77,8 @@ namespace Tetris.Src
 
             foreach (var block in blocks)
             {
+                controller.HandleInput(block, grid);
+
                 block.Update(grid, dt);
             }
 

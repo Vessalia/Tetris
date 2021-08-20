@@ -91,7 +91,6 @@ namespace Tetris.Src
         {
             int minDim;
             int minMN;
-            int cellLen;
             if (Constants.Screen.X / cellMN.x >= Constants.Screen.Y / cellMN.y)
             {
                 minDim = (int)Constants.Screen.Y;
@@ -102,7 +101,7 @@ namespace Tetris.Src
                 minDim = (int)Constants.Screen.X;
                 minMN = cellMN.x;
             }
-            return cellLen = (int)MathF.Floor((float)minDim / minMN);
+            return (int)MathF.Floor((float)minDim / minMN);
         }
 
         public Location GetCellMN()
