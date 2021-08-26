@@ -40,25 +40,13 @@ namespace Tetris.Src
 
             grid = new Grid(new Location(10, 20));
 
-            Block iBlock = ShapeBuilder.CreateIBlock(new Location(0, 0));
-            Block oBlock = ShapeBuilder.CreateOBlock(new Location(4, 0));
-            Block tBlock = ShapeBuilder.CreateTBlock(new Location(0, 4));
-            Block sBlock = ShapeBuilder.CreateSBlock(new Location(4, 4));
-            Block zBlock = ShapeBuilder.CreateZBlock(new Location(0, 8));
-            Block jBlock = ShapeBuilder.CreateJBlock(new Location(4, 8));
-            Block lBlock = ShapeBuilder.CreateLBlock(new Location(0, 12));
+            Block oBlock = ShapeBuilder.CreateLBlock(new Location(0, 0));
 
             controller = new Controller(input);
 
             blocks = new List<Block>
             { 
-                iBlock,
-                oBlock,
-                tBlock,
-                sBlock, 
-                zBlock,
-                jBlock,
-                lBlock
+                oBlock
             };
 
             base.Initialize();

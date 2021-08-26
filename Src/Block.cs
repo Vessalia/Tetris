@@ -16,16 +16,18 @@ namespace Tetris.Src
 
         private int xSpeed;
 
+        private bool isLive;
+
         private float timer;
         private float updateTimer;
         private int fallSpeed;
-
-        private Grid grid;
 
         public Block(Location pos, bool[,] shape)
         {
             this.pos = pos;
             this.shape = shape;
+
+            isLive = true;
 
             timer = 0;
             updateTimer = 1;
@@ -35,9 +37,9 @@ namespace Tetris.Src
         public void Draw(Grid grid, SpriteBatch sb)
         {
             Vector2 drawPos = Vector2.Zero;
-            for (int i = 0; i < shape.GetLength(1); i++)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < shape.GetLength(0); j++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
                     if (shape[j, i])
                     {
@@ -51,53 +53,45 @@ namespace Tetris.Src
 
         public void Update(Grid grid, float dt)
         {
-            timer += dt;
-            if(CollisionCheck(grid, 0))
+            if (isLive)
             {
-                if (timer >= updateTimer)
+                if (CollisionCheck(grid))
                 {
-                    pos.y += fallSpeed;
+                    timer += dt;
+                    if (timer >= updateTimer)
+                    {
+                        pos.y += fallSpeed;
 
+                        ResetTimers();
+                    }
+                }
+
+                if (!CollisionCheck(grid))
+                {
+                    pos.y -= 1;
+                    fallSpeed = 0;
+                    isLive = false;
                     ResetTimers();
                 }
             }
         }
 
-        public bool CollisionCheck(Grid grid, int dir)
+        public bool CollisionCheck(Grid grid)
         {
-            var shapeNeighbors = new List<List<Location>>();
-            int minX = 4;
-            int maxX = 0;
-            int minY = 4;
-            int maxY = 0;
-            for (int i = 0; i < shape.GetLength(1); i++)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < shape.GetLength(0); j++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
                     if (shape[j, i])
                     {
-                        minX = (int)MathF.Min(minX, i); maxX = (int)MathF.Max(maxX, i);
-                        minY = (int)MathF.Min(minY, j); maxY = (int)MathF.Max(maxY, j);
-                        shapeNeighbors.Add(grid.Neighbors(new Location(pos.x + i, pos.y + j)));
+                        if(!grid.InBounds(new Location(pos.x + i, pos.y + j)))
+                        {
+                            return false;
+                        }
                     }
                 }
             }
 
-            foreach (var cellNeighbors in shapeNeighbors)
-            {
-                foreach (var neighbor in cellNeighbors)
-                {
-                    bool rightCheck = dir > 0 && !grid.InBounds(pos + new Location(maxX + dir, 0));
-                    bool leftCheck = dir < 0 && !grid.InBounds(pos + new Location(minX + dir, 0));
-                    bool bottomCheck = dir == 0 && !grid.InBounds(pos + new Location(0, maxY + 1));
-
-                    if (rightCheck || leftCheck || bottomCheck)
-                    {
-                        return false;
-                    }
-                }
-            }
-            
             return true;
         }
 
@@ -107,15 +101,24 @@ namespace Tetris.Src
             updateTimer = 1;
         }
 
-        public void Rotate()
+        public void Rotate(Grid grid)
         {
             shape = RotateArrayClockwise(shape);
         }
 
-        public void HorizontalTranslation(int dir)
+        public void HorizontalTranslation(Grid grid, int dir)
         {
             xSpeed = dir;
             pos.x += xSpeed;
+            if (!CollisionCheck(grid))
+            {
+                pos.x -= xSpeed;
+            }
+        }
+
+        public bool IsBlockLive()
+        {
+            return isLive;
         }
 
         public void VerticalTranslation(float clockDiv)
