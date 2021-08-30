@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Tetris.Src
 {
-    class Block
+    class Block : ICloneable
     {
         private Location pos;
 
@@ -36,14 +36,13 @@ namespace Tetris.Src
 
         public void Draw(Grid grid, SpriteBatch sb)
         {
-            Vector2 drawPos = Vector2.Zero;
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
                 for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
                     if (shape[j, i])
                     {
-                        drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.GetCellMN());
+                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.GetCellMN());
                         sb.FillRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.White);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.Black);
                     }
@@ -71,7 +70,6 @@ namespace Tetris.Src
                     pos.y -= 1;
                     fallSpeed = 0;
                     isLive = false;
-                    ResetTimers();
                 }
             }
         }
@@ -93,6 +91,26 @@ namespace Tetris.Src
             }
 
             return true;
+        }
+
+        public void ClampedRotate(Grid grid)
+        {
+            Rotate(grid);
+            while (!CollisionCheck(grid))
+            {
+                if (pos.x < 0)
+                {
+                    pos.x += 1;
+                }
+                else if (pos.x >= grid.GetCellMN().x - (shape.GetUpperBound(0) + 1))
+                {
+                    pos.x -= 1;
+                }
+                else
+                {
+                    pos.y -= 1;
+                }
+            }
         }
 
         private void ResetTimers()
@@ -153,9 +171,9 @@ namespace Tetris.Src
             return dst;
         }
 
-        private bool BlockHasReachcedBottom()
+        public object Clone()
         {
-            return true;
+            return this.MemberwiseClone();
         }
     }
 }

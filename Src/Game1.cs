@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tetris.Src
 {
@@ -17,9 +19,19 @@ namespace Tetris.Src
 
         private List<Block> blocks;
 
+        private List<Block> placedBlocks;
+
+        private List<Block> onScreenBlocks;
+
+        private Block activeBlock;
+
         private Controller controller;
 
+        private bool blockRefresh;
+
         public static Input input;
+
+        Random randInt = new Random();
 
         private float dt;
 
@@ -40,14 +52,30 @@ namespace Tetris.Src
 
             grid = new Grid(new Location(10, 20));
 
-            Block oBlock = ShapeBuilder.CreateLBlock(new Location(0, 0));
-
-            controller = new Controller(input);
+            Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block oBlock = ShapeBuilder.CreateOBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block tBlock = ShapeBuilder.CreateTBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block sBlock = ShapeBuilder.CreateSBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block zBlock = ShapeBuilder.CreateZBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block jBlock = ShapeBuilder.CreateJBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block lBlock = ShapeBuilder.CreateLBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
 
             blocks = new List<Block>
-            { 
-                oBlock
+            {
+                iBlock, oBlock, tBlock, sBlock, zBlock, jBlock, lBlock
             };
+
+            placedBlocks = new List<Block>();
+            onScreenBlocks = new List<Block>();
+
+            activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+
+            onScreenBlocks.Add(activeBlock);
+
+            controller = new Controller(input);
+            controller.SetActiveBlock(activeBlock);
+
+            blockRefresh = true;
 
             base.Initialize();
         }
@@ -63,11 +91,25 @@ namespace Tetris.Src
 
             input.Update();
 
-            foreach (var block in blocks)
-            {
-                controller.HandleInput(block, grid);
+            controller.HandleInput(grid, blockRefresh);
 
-                block.Update(grid, dt);
+            activeBlock.Update(grid, dt);
+
+            if (!blockRefresh)
+            {
+                if (input.IsKeyJustReleased(Keys.Down))
+                {
+                    blockRefresh = true;
+                }
+            }
+
+            if (!activeBlock.IsBlockLive())
+            {
+                placedBlocks.Add(activeBlock);
+                activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+                controller.SetActiveBlock(activeBlock);
+                onScreenBlocks.Add(activeBlock);
+                blockRefresh = false;
             }
 
             base.Update(gameTime);
@@ -81,7 +123,7 @@ namespace Tetris.Src
 
             grid.DrawGrid(_spriteBatch);
 
-            foreach (var block in blocks)
+            foreach (var block in onScreenBlocks)
             {
                 block.Draw(grid, _spriteBatch);
             }
