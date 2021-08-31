@@ -17,6 +17,7 @@ namespace Tetris.Src
             var gridPos = new Vector2();
             int minDim;
             int minMN;
+
             if (Constants.Screen.X / cellMN.x >= Constants.Screen.Y / cellMN.y)
             {
                 minDim = (int)Constants.Screen.Y;

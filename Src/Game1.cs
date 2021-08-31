@@ -21,8 +21,6 @@ namespace Tetris.Src
 
         private List<Block> placedBlocks;
 
-        private List<Block> onScreenBlocks;
-
         private Block activeBlock;
 
         private Controller controller;
@@ -31,7 +29,7 @@ namespace Tetris.Src
 
         public static Input input;
 
-        Random randInt = new Random();
+        private Random randInt;
 
         private float dt;
 
@@ -50,6 +48,8 @@ namespace Tetris.Src
 
             input = new Input();
 
+            randInt = new Random();
+
             grid = new Grid(new Location(10, 20));
 
             Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
@@ -66,11 +66,8 @@ namespace Tetris.Src
             };
 
             placedBlocks = new List<Block>();
-            onScreenBlocks = new List<Block>();
 
             activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
-
-            onScreenBlocks.Add(activeBlock);
 
             controller = new Controller(input);
             controller.SetActiveBlock(activeBlock);
@@ -93,7 +90,7 @@ namespace Tetris.Src
 
             controller.HandleInput(grid, blockRefresh);
 
-            activeBlock.Update(grid, dt);
+            activeBlock.Update(grid, dt, placedBlocks);
 
             if (!blockRefresh)
             {
@@ -108,8 +105,10 @@ namespace Tetris.Src
                 placedBlocks.Add(activeBlock);
                 activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
                 controller.SetActiveBlock(activeBlock);
-                onScreenBlocks.Add(activeBlock);
-                blockRefresh = false;
+                if (input.IsKeyDown(Keys.Down))
+                {
+                    blockRefresh = false;
+                }
             }
 
             base.Update(gameTime);
@@ -123,10 +122,12 @@ namespace Tetris.Src
 
             grid.DrawGrid(_spriteBatch);
 
-            foreach (var block in onScreenBlocks)
+            foreach (var block in placedBlocks)
             {
                 block.Draw(grid, _spriteBatch);
             }
+
+            activeBlock.Draw(grid, _spriteBatch);
 
             _spriteBatch.DrawLine(Constants.Screen.X / 2, 0, Constants.Screen.X / 2, Constants.Screen.Y, Color.Orange);
             _spriteBatch.DrawLine(0, Constants.Screen.Y / 2, Constants.Screen.X, Constants.Screen.Y / 2, Color.Orange);

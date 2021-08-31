@@ -6,7 +6,7 @@ namespace Tetris.Src
 {
     static class ShapeBuilder
     {
-        private static bool[,] iShape =
+        private static readonly bool[,] iShape =
             {
                 {false, true, false, false },
                 {false, true, false, false },
@@ -14,7 +14,7 @@ namespace Tetris.Src
                 {false, true, false, false }
             };
 
-        private static bool[,] oShape =
+        private static readonly bool[,] oShape =
             {
                 {false, false, false, false },
                 {false, true, true, false },
@@ -22,7 +22,7 @@ namespace Tetris.Src
                 {false, false, false, false }
             };
 
-        private static bool[,] tShape =
+        private static readonly bool[,] tShape =
             {
                 {false, false, false, false },
                 {false, true, true, true },

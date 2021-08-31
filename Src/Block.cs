@@ -18,9 +18,11 @@ namespace Tetris.Src
 
         private bool isLive;
 
+        private List<Block> placedBlocks;
+
         private float timer;
         private float updateTimer;
-        private int fallSpeed;
+        private readonly int fallSpeed;
 
         public Block(Location pos, bool[,] shape)
         {
@@ -50,27 +52,25 @@ namespace Tetris.Src
             }
         }
 
-        public void Update(Grid grid, float dt)
+        public void Update(Grid grid, float dt, List<Block> placedBlocks)
         {
-            if (isLive)
+            this.placedBlocks = placedBlocks;
+            
+            if (!CollisionCheck(grid))
             {
-                if (CollisionCheck(grid))
+                timer += dt;
+                if (timer >= updateTimer)
                 {
-                    timer += dt;
-                    if (timer >= updateTimer)
-                    {
-                        pos.y += fallSpeed;
+                    pos.y += fallSpeed;
 
-                        ResetTimers();
-                    }
+                    ResetTimers();
                 }
+            }
 
-                if (!CollisionCheck(grid))
-                {
-                    pos.y -= 1;
-                    fallSpeed = 0;
-                    isLive = false;
-                }
+            while (CollisionCheck(grid) || BlockCollisionCheck(placedBlocks))
+            {
+                pos.y -= 1;
+                isLive = false;
             }
         }
 
@@ -84,19 +84,44 @@ namespace Tetris.Src
                     {
                         if(!grid.InBounds(new Location(pos.x + i, pos.y + j)))
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
             }
 
-            return true;
+            return false;
         }
 
-        public void ClampedRotate(Grid grid)
+        public bool BlockCollisionCheck(List<Block> placedBlocks)
         {
-            Rotate(grid);
-            while (!CollisionCheck(grid))
+            foreach (var block in placedBlocks)
+            {
+                for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+                {
+                    for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                    {
+                        if (shape[j, i])
+                        {
+                            Location cellPos = new Location(pos.x + i, pos.y + j);
+
+                            if (block.IsShapeHere(cellPos))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public void ClampedRotateClockwise(Grid grid)
+        {
+            shape = RotateArrayClockwise(shape);
+
+            while (CollisionCheck(grid))
             {
                 if (pos.x < 0)
                 {
@@ -108,7 +133,28 @@ namespace Tetris.Src
                 }
                 else
                 {
-                    pos.y -= 1;
+                    shape = RotateArrayCounterClockwise(shape);
+                }
+            }
+        }
+
+        public void ClampedRotateCounterClockwise(Grid grid)
+        {
+            shape = RotateArrayCounterClockwise(shape);
+
+            while (CollisionCheck(grid))
+            {
+                if (pos.x < 0)
+                {
+                    pos.x += 1;
+                }
+                else if (pos.x >= grid.GetCellMN().x - (shape.GetUpperBound(0) + 1))
+                {
+                    pos.x -= 1;
+                }
+                else
+                {
+                    shape = RotateArrayClockwise(shape);
                 }
             }
         }
@@ -119,16 +165,12 @@ namespace Tetris.Src
             updateTimer = 1;
         }
 
-        public void Rotate(Grid grid)
-        {
-            shape = RotateArrayClockwise(shape);
-        }
-
         public void HorizontalTranslation(Grid grid, int dir)
         {
             xSpeed = dir;
             pos.x += xSpeed;
-            if (!CollisionCheck(grid))
+
+            if (CollisionCheck(grid) || BlockCollisionCheck(placedBlocks))
             {
                 pos.x -= xSpeed;
             }
@@ -171,9 +213,65 @@ namespace Tetris.Src
             return dst;
         }
 
+        private static bool[,] RotateArrayCounterClockwise(bool[,] src)
+        {
+            int width;
+            int height;
+            bool[,] dst;
+
+            width = src.GetUpperBound(0) + 1;
+            height = src.GetUpperBound(1) + 1;
+            dst = new bool[height, width];
+
+            for (int row = 0; row < height; row++)
+            {
+                for (int col = 0; col < width; col++)
+                {
+                    int newRow;
+                    int newCol;
+
+                    newRow = width - (col + 1);
+                    newCol = row;
+
+                    dst[newCol, newRow] = src[col, row];
+                }
+            }
+
+            return dst;
+        }
+
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public bool IsShapeHere(Location cellPos)
+        {
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+            {
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                {
+                    if (shape[j, i])
+                    {
+                        if (pos + new Location (i, j) == cellPos)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public void AddPos(Location dir)
+        {
+            pos += dir;
+        }
+
+        public Location GetPos()
+        {
+            return pos;
         }
     }
 }
