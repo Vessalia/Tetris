@@ -7,6 +7,7 @@ namespace Tetris.Src
     public struct Location
     {
         public int x, y;
+        public static Location zero = new Location(0, 0);
 
         public Location(int x, int y)
         {
@@ -48,6 +49,11 @@ namespace Tetris.Src
         public static Location operator /(Location a, Location b)
         {
             return new Location(a.x / b.x, a.y / b.y);
+        }
+
+        public static Location Zero()
+        {
+            return zero;
         }
     }
 }

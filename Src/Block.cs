@@ -39,7 +39,7 @@ namespace Tetris.Src
             fallSpeed = 1;
         }
 
-        public void Draw(Grid grid, SpriteBatch sb)
+        public void Draw(Grid grid, SpriteBatch sb, int xOffset = 0, int yOffset = 0)
         {
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -47,7 +47,7 @@ namespace Tetris.Src
                 {
                     if (shape[j, i])
                     {
-                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.GetCellMN());
+                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i + xOffset, pos.y + j + yOffset), grid.GetCellMN());
                         sb.FillRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), colour);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.Black);
                     }
@@ -275,6 +275,11 @@ namespace Tetris.Src
         public Location GetPos()
         {
             return pos;
+        }
+
+        public Location GetShapeMN()
+        {
+            return new Location(shape.GetUpperBound(0) + 1, shape.GetUpperBound(1) + 1);
         }
     }
 }

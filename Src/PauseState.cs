@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended;
 using System;
@@ -45,7 +46,7 @@ namespace Tetris.Src
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
 
-            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Volume = 0.2f;
         }
 
         public override void HandleInput()
@@ -53,7 +54,13 @@ namespace Tetris.Src
             menu.HandleButtonInput();
         }
 
-        public override void Update(float timeStep) { }
+        public override void Update(float timeStep) 
+        {
+            if (input.IsKeyJustPressed(Keys.Escape))
+            {
+                switcher.SetNextState(gameState);
+            }
+        }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
         {
@@ -61,7 +68,7 @@ namespace Tetris.Src
 
             gameState.DrawToScreen(sb, fonts);
 
-            sb.FillRectangle(new Vector2(0, 0), Constants.Screen, new Color(Color.LightBlue, 0.84f));
+            sb.FillRectangle(new Vector2(0, 0), Constants.Screen, new Color(Color.DimGray, 0.84f));
 
             menu.DrawButtons(sb, font);
 

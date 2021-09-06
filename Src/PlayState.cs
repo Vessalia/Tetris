@@ -16,7 +16,7 @@ namespace Tetris.Src
 
         private List<Block> placedBlocks;
 
-        private Block activeBlock;
+        private Block activeBlock, nextBlock;
 
         private Controller controller;
 
@@ -46,6 +46,11 @@ namespace Tetris.Src
             placedBlocks = new List<Block>();
 
             activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+            do
+            {
+                nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+            }
+            while (nextBlock == activeBlock);
 
             controller = new Controller(input);
             controller.SetActiveBlock(activeBlock);
@@ -62,12 +67,11 @@ namespace Tetris.Src
             controller.HandleInput(grid, blockRefresh);
         }
 
-
         public override void Update(float dt)
         {
             MediaPlayer.Volume = 1;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (input.IsKeyJustPressed(Keys.Escape))
             {
                 switcher.SetNextState(new PauseState(switcher, input, this, songs));
             }
@@ -85,7 +89,8 @@ namespace Tetris.Src
             if (!activeBlock.IsBlockLive())
             {
                 placedBlocks.Add(activeBlock);
-                activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+                activeBlock = nextBlock;
+                nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
                 controller.SetActiveBlock(activeBlock);
                 if (input.IsKeyDown(Keys.Down))
                 {
@@ -105,7 +110,10 @@ namespace Tetris.Src
                 block.Draw(grid, sb);
             }
 
+            int nextTextSize = 1;
+
             activeBlock.Draw(grid, sb);
+            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, nextTextSize);
         }
     }
 }

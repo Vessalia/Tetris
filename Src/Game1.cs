@@ -80,7 +80,15 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightBlue);
+            if (gameState is MainMenuState)
+            {
+                GraphicsDevice.Clear(Color.LightBlue);
+            }
+
+            else
+            {
+                GraphicsDevice.Clear(Color.DimGray);
+            }
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 

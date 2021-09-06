@@ -33,6 +33,7 @@ namespace Tetris.Src
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
 
             MediaPlayer.Stop();
+            MediaPlayer.Volume = 1;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(songs["menu"]);
         }
