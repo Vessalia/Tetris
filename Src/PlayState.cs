@@ -23,8 +23,6 @@ namespace Tetris.Src
 
         private Random randInt;
 
-        private float dt;
-
         public PlayState(IGameStateSwitcher switcher, Input input) : base(switcher, input)
         {
             randInt = new Random();

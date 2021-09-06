@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tetris.Src
@@ -112,7 +113,7 @@ namespace Tetris.Src
 
         public void CheckLines()
         {
-            int lines = 0;
+            var lines = new List<int>();
             for (int j = 0; j < cellMN.y; j++)
             {
                 int row = 0;
@@ -126,16 +127,16 @@ namespace Tetris.Src
 
                 if (row == cellMN.x)
                 {
-                    lines += 1;
+                    lines.Append(j);
                 }
             }
 
             HandleLines(lines);
         }
 
-        public void HandleLines(int lines)
+        public void HandleLines(List<int> lines)
         {
-
+            return;
         }
     }
 }
