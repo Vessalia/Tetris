@@ -26,3 +26,9 @@ C:\Users\Nathan\source\repos\Tetris\Tetris\obj\Debug\netcoreapp3.1\Tetris.genrun
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Arial32.xnb
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\ScoreFont.xnb
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\TitleFont.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris (2008) OST - Menu Loop.ogg
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris (2008) OST - Menu Loop.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris 99 - Main Theme.ogg
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris 99 - Main Theme.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris® (2008) OST - Menu Loop.ogg
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris® (2008) OST - Menu Loop.xnb

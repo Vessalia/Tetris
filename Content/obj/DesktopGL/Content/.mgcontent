@@ -6,11 +6,15 @@
   <SourceFiles>
     <File>C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Arial32.spritefont</File>
     <File>C:/Users/Nathan/source/repos/Tetris/Tetris/Content/ScoreFont.spritefont</File>
+    <File>C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Tetris 99 - Main Theme.mp3</File>
+    <File>C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Tetris® (2008) OST - Menu Loop.mp3</File>
     <File>C:/Users/Nathan/source/repos/Tetris/Tetris/Content/TitleFont.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>Tetris (2008) OST - Menu Loop.mp3</File>
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

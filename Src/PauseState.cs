@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Tetris.Src
 
         private readonly GameState gameState;
 
-        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState) : base(switcher, input)
+        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState, Dictionary<string, Song> songs) : base(switcher, input, songs)
         {
             menu = new Menu();
 
@@ -30,7 +31,7 @@ namespace Tetris.Src
 
             Action menuAction = () =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input));
+                switcher.SetNextState(new MainMenuState(switcher, input, songs));
             };
 
             var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
@@ -43,6 +44,8 @@ namespace Tetris.Src
             menu.AddButton(resumePos, Color.White, "Resume", resumeAction);
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
+
+            MediaPlayer.Volume = 0.5f;
         }
 
         public override void HandleInput()
@@ -58,7 +61,7 @@ namespace Tetris.Src
 
             gameState.DrawToScreen(sb, fonts);
 
-            sb.FillRectangle(new Vector2(0, 0), Constants.Screen, new Color(Color.Black, 0.84f));
+            sb.FillRectangle(new Vector2(0, 0), Constants.Screen, new Color(Color.LightBlue, 0.84f));
 
             menu.DrawButtons(sb, font);
 

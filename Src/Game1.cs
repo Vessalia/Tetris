@@ -15,6 +15,8 @@ namespace Tetris.Src
         private SpriteBatch _spriteBatch;
         private Dictionary<string, SpriteFont> fonts;
 
+        private Dictionary<string, Song> songs;
+
         private GameState gameState;
 
         public static Input input;
@@ -34,7 +36,13 @@ namespace Tetris.Src
 
             input = new Input();
 
-            gameState = new MainMenuState(this, input);
+            songs = new Dictionary<string, Song>
+            {
+                ["menu"] = Content.Load<Song>("Tetris (2008) OST - Menu Loop"),
+                ["game"] = Content.Load<Song>("Tetris 99 - Main Theme")
+            };
+
+            gameState = new MainMenuState(this, input, songs);
 
             base.Initialize();
         }
@@ -72,7 +80,7 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.LightBlue);
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 

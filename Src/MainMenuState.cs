@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Tetris.Src
     {
         private readonly Menu menu;
 
-        public MainMenuState(IGameStateSwitcher switcher, Input input) : base(switcher, input)
+        public MainMenuState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
         {
             menu = new Menu();
 
@@ -18,7 +19,7 @@ namespace Tetris.Src
 
             Action playAction = () =>
             {
-                switcher.SetNextState(new PlayState(switcher, input));
+                switcher.SetNextState(new PlayState(switcher, input, songs));
             };
 
             var exitPos = Constants.Screen / 2 + new Vector2(0, 100);
@@ -30,6 +31,10 @@ namespace Tetris.Src
 
             menu.AddButton(playPos, Color.White, "Play", playAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
+
+            MediaPlayer.Stop();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(songs["menu"]);
         }
 
         public override void HandleInput()

@@ -134,7 +134,7 @@ namespace Tetris.Src
             HandleLines(lines);
         }
 
-        public void HandleLines(List<int> lines)
+        private void HandleLines(List<int> lines)
         {
             return;
         }

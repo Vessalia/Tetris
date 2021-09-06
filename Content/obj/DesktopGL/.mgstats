@@ -1,4 +1,6 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Arial32.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/Arial32.xnb","FontDescriptionProcessor","SpriteFontContent",2008,70690,0.1858976
-"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/ScoreFont.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/ScoreFont.xnb","FontDescriptionProcessor","SpriteFontContent",2014,37922,0.0231336
-"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/TitleFont.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/TitleFont.xnb","FontDescriptionProcessor","SpriteFontContent",2008,267298,0.0316419
+"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Arial32.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/Arial32.xnb","FontDescriptionProcessor","SpriteFontContent",2008,70690,0.1866829
+"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/ScoreFont.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/ScoreFont.xnb","FontDescriptionProcessor","SpriteFontContent",2014,37922,0.0169564
+"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Tetris 99 - Main Theme.mp3","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/Tetris 99 - Main Theme.xnb","SongProcessor","SongContent",4685996,140,4.948106
+"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/Tetris® (2008) OST - Menu Loop.mp3","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/Tetris (2008) OST - Menu Loop.xnb","SongProcessor","SongContent",714669,147,1.3519498
+"C:/Users/Nathan/source/repos/Tetris/Tetris/Content/TitleFont.spritefont","C:/Users/Nathan/source/repos/Tetris/Tetris/Content/bin/DesktopGL/TitleFont.xnb","FontDescriptionProcessor","SpriteFontContent",2008,267298,0.0325666

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Tetris.Src
 
         private Random randInt;
 
-        public PlayState(IGameStateSwitcher switcher, Input input) : base(switcher, input)
+        public PlayState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
         {
             randInt = new Random();
 
@@ -50,6 +51,10 @@ namespace Tetris.Src
             controller.SetActiveBlock(activeBlock);
 
             blockRefresh = true;
+
+            MediaPlayer.Stop();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(songs["game"]);
         }
 
         public override void HandleInput()
@@ -60,9 +65,11 @@ namespace Tetris.Src
 
         public override void Update(float dt)
         {
+            MediaPlayer.Volume = 1;
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                switcher.SetNextState(new PauseState(switcher, input, this));
+                switcher.SetNextState(new PauseState(switcher, input, this, songs));
             }
 
             activeBlock.Update(grid, dt, placedBlocks);
@@ -85,6 +92,8 @@ namespace Tetris.Src
                     blockRefresh = false;
                 }
             }
+
+            grid.CheckLines();
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
