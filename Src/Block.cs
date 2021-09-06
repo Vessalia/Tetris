@@ -12,6 +12,8 @@ namespace Tetris.Src
     {
         private Location pos;
 
+        private Color colour;
+
         private bool[,] shape;
 
         private int xSpeed;
@@ -24,10 +26,11 @@ namespace Tetris.Src
         private float updateTimer;
         private readonly int fallSpeed;
 
-        public Block(Location pos, bool[,] shape)
+        public Block(Location pos, bool[,] shape, Color colour)
         {
             this.pos = pos;
             this.shape = shape;
+            this.colour = colour;
 
             isLive = true;
 
@@ -45,7 +48,7 @@ namespace Tetris.Src
                     if (shape[j, i])
                     {
                         Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.GetCellMN());
-                        sb.FillRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.White);
+                        sb.FillRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), colour);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.Black);
                     }
                 }

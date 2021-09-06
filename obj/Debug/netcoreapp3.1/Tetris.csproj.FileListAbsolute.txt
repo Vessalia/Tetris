@@ -23,3 +23,6 @@ C:\Users\Nathan\source\repos\Tetris\Tetris\obj\Debug\netcoreapp3.1\Tetris.csproj
 C:\Users\Nathan\source\repos\Tetris\Tetris\obj\Debug\netcoreapp3.1\Tetris.dll
 C:\Users\Nathan\source\repos\Tetris\Tetris\obj\Debug\netcoreapp3.1\Tetris.pdb
 C:\Users\Nathan\source\repos\Tetris\Tetris\obj\Debug\netcoreapp3.1\Tetris.genruntimeconfig.cache
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Arial32.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\ScoreFont.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\TitleFont.xnb

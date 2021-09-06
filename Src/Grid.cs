@@ -72,10 +72,6 @@ namespace Tetris.Src
                 gridValues[i, j] = cell;
                 colours[i, j] = colour;
             }
-            else
-            {
-
-            }
         }
 
         public CellMembers GetCell(int i, int j)
@@ -114,28 +110,32 @@ namespace Tetris.Src
             return 0 <= id.x && id.x < cellMN.x && 0 <= id.y && id.y < cellMN.y;
         }
 
-        public List<Location> Neighbors(Location cell)
+        public void CheckLines()
         {
-            var neighbors = new List<Location>();
-
-            Location[] DIRS = new[]
+            int lines = 0;
+            for (int j = 0; j < cellMN.y; j++)
             {
-                new Location(1, 0),
-                new Location(0, -1),
-                new Location(-1, 0),
-                new Location(0, 1)
-            };
-
-            foreach (var dir in DIRS)
-            {
-                Location next = new Location(cell.x + dir.x, cell.y + dir.y);
-                if (InBounds(next) && gridValues[next.x, next.y] == CellMembers.empty)
+                int row = 0;
+                for (int i = 0; i < cellMN.x; i++)
                 {
-                    neighbors.Add(next);
+                    if (gridValues[i, j] == CellMembers.block)
+                    {
+                        row += 1;
+                    }
+                }
+
+                if (row == cellMN.x)
+                {
+                    lines += 1;
                 }
             }
 
-            return neighbors;
+            HandleLines(lines);
+        }
+
+        public void HandleLines(int lines)
+        {
+
         }
     }
 }

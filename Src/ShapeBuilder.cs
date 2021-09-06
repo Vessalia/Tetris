@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -62,39 +63,47 @@ namespace Tetris.Src
                 {false, true, true, false }
             };
 
+        private static readonly Color iColour = new Color(0, 255, 255);
+        private static readonly Color oColour = new Color(255, 255, 0);
+        private static readonly Color tColour = new Color(128, 0, 128);
+        private static readonly Color sColour = new Color(0, 255, 0);
+        private static readonly Color zColour = new Color(255, 0, 0);
+        private static readonly Color jColour = new Color(0, 0, 255);
+        private static readonly Color lColour = new Color(255, 127, 0);
+
         public static Block CreateIBlock(Location pos)
         {
-            return new Block(pos, iShape);
+            return new Block(pos, iShape, iColour);
         }
 
         public static Block CreateOBlock(Location pos)
         {
-            return new Block(pos, oShape);
+            return new Block(pos, oShape, oColour);
         }
 
         public static Block CreateTBlock(Location pos)
         {
-            return new Block(pos, tShape);
+            return new Block(pos, tShape, tColour);
         }
 
         public static Block CreateSBlock(Location pos)
         {
-            return new Block(pos, sShape);
+            return new Block(pos, sShape, sColour);
         }
 
         public static Block CreateZBlock(Location pos)
         {
-            return new Block(pos, zShape);
+            return new Block(pos, zShape, zColour);
         }
 
         public static Block CreateJBlock(Location pos)
         {
-            return new Block(pos, jShape);
+            return new Block(pos, jShape, jColour);
         }
 
         public static Block CreateLBlock(Location pos)
         {
-            return new Block(pos, lShape);
+            return new Block(pos, lShape, lColour);
         }
     }
 }
