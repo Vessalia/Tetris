@@ -75,7 +75,7 @@ namespace Tetris.Src
             var text = "Paused";
             var textSize = font.MeasureString(text);
 
-            sb.DrawString(font, text, new Vector2(Constants.Screen.X / 2, 200) - textSize / 2, Color.HotPink);
+            sb.DrawString(font, text, new Vector2(Constants.Screen.X / 2, 200) - textSize / 2, Color.Purple);
         }
     }
 }

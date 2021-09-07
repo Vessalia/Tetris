@@ -11,6 +11,7 @@ namespace Tetris.Src
     class Block : ICloneable
     {
         private Location pos;
+        private Location initialPos;
 
         private Color colour;
 
@@ -31,6 +32,8 @@ namespace Tetris.Src
             this.pos = pos;
             this.shape = shape;
             this.colour = colour;
+
+            initialPos = pos;
 
             isLive = true;
 
@@ -280,6 +283,11 @@ namespace Tetris.Src
         public Location GetShapeMN()
         {
             return new Location(shape.GetUpperBound(0) + 1, shape.GetUpperBound(1) + 1);
+        }
+
+        public void ResetPos()
+        {
+            pos = initialPos;
         }
     }
 }

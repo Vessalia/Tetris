@@ -80,7 +80,7 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            if (gameState is MainMenuState)
+            if (gameState is MainMenuState) // bad practice
             {
                 GraphicsDevice.Clear(Color.LightBlue);
             }

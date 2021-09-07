@@ -136,7 +136,10 @@ namespace Tetris.Src
 
         private void HandleLines(List<int> lines)
         {
-            return;
+            foreach (var line in lines)
+            {
+                return;
+            }
         }
     }
 }

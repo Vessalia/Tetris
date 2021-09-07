@@ -16,11 +16,12 @@ namespace Tetris.Src
 
         private List<Block> placedBlocks;
 
-        private Block activeBlock, nextBlock;
+        private Block activeBlock, nextBlock, heldBlock, tempBlock;
 
         private Controller controller;
 
         private bool blockRefresh;
+        private bool heldBlockCooldown;
 
         private Random randInt;
 
@@ -46,16 +47,13 @@ namespace Tetris.Src
             placedBlocks = new List<Block>();
 
             activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
-            do
-            {
-                nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
-            }
-            while (nextBlock == activeBlock);
+            nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
 
             controller = new Controller(input);
             controller.SetActiveBlock(activeBlock);
 
             blockRefresh = true;
+            heldBlockCooldown = false;
 
             MediaPlayer.Stop();
             MediaPlayer.IsRepeating = true;
@@ -65,6 +63,16 @@ namespace Tetris.Src
         public override void HandleInput()
         {
             controller.HandleInput(grid, blockRefresh);
+            if (input.IsKeyJustPressed(Keys.C) && !heldBlockCooldown)
+            {
+                if (heldBlock != null)
+                {
+                    tempBlock = heldBlock;
+                }
+
+                activeBlock.ResetPos();
+                heldBlock = activeBlock;
+            }
         }
 
         public override void Update(float dt)
@@ -80,15 +88,34 @@ namespace Tetris.Src
 
             if (!blockRefresh)
             {
-                if (input.IsKeyJustReleased(Keys.Down))
+                if (input.IsKeyJustReleased(Keys.Down) || input.IsKeyJustReleased(Keys.C))
                 {
                     blockRefresh = true;
+                }
+            }
+
+            if (heldBlock == activeBlock && !heldBlockCooldown)
+            {
+                heldBlockCooldown = true;
+                if (tempBlock == null)
+                {
+                    activeBlock = nextBlock;
+                    nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+                }
+                else
+                {
+                    activeBlock = tempBlock;
+                }
+                controller.SetActiveBlock(activeBlock);
+                {
+                    blockRefresh = false;
                 }
             }
 
             if (!activeBlock.IsBlockLive())
             {
                 placedBlocks.Add(activeBlock);
+                heldBlockCooldown = false;
                 activeBlock = nextBlock;
                 nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
                 controller.SetActiveBlock(activeBlock);
@@ -114,6 +141,10 @@ namespace Tetris.Src
 
             activeBlock.Draw(grid, sb);
             nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, nextTextSize);
+            if (heldBlock != null)
+            {
+                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + nextTextSize);
+            }
         }
     }
 }
