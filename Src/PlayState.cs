@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
@@ -137,13 +138,22 @@ namespace Tetris.Src
                 block.Draw(grid, sb);
             }
 
-            int nextTextSize = 1;
+            var nextText = "Next Block";
+            var nextTextSize = fonts["default"].MeasureString(nextText);
+            var nextTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, 0);
+            sb.DrawString(fonts["default"], nextText, nextTextVec, Color.Blue);
+
+            var holdText = "Held Block";
+            var holdTextSize = fonts["default"].MeasureString(holdText);
+            var holdTextVec = new Vector2((Constants.Screen.X - grid.GetCellLen() * grid.GetCellMN().x) / 2 - holdTextSize.X, 0);
+            sb.DrawString(fonts["default"], holdText, holdTextVec, Color.Orange);
 
             activeBlock.Draw(grid, sb);
-            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, nextTextSize);
+            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, (int)nextTextSize.Y / grid.GetCellLen());
+
             if (heldBlock != null)
             {
-                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + nextTextSize);
+                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + (int)holdTextSize.Y / grid.GetCellLen());
             }
         }
     }
