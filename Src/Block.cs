@@ -73,10 +73,16 @@ namespace Tetris.Src
                 }
             }
 
+            int blockSpawnCheck = 0;
             while (CollisionCheck(grid) || BlockCollisionCheck(placedBlocks))
             {
                 pos.y -= 1;
                 isLive = false;
+                blockSpawnCheck++;
+                if(blockSpawnCheck > grid.GetCellMN().y)
+                {
+                    break;
+                }
             }
         }
 

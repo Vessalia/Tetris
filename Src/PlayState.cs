@@ -149,11 +149,11 @@ namespace Tetris.Src
             sb.DrawString(fonts["default"], holdText, holdTextVec, Color.Orange);
 
             activeBlock.Draw(grid, sb);
-            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, (int)nextTextSize.Y / grid.GetCellLen());
+            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, 2);
 
             if (heldBlock != null)
             {
-                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + (int)holdTextSize.Y / grid.GetCellLen());
+                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + 2);
             }
         }
     }
