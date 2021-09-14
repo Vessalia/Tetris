@@ -21,11 +21,17 @@ namespace Tetris.Src
 
         private readonly Location cellMN;
 
+        private float timer;
+        private float blockClearTimer;
+
         public Grid(Location cellMN)
         {
             this.cellMN = cellMN;
 
             BuildGrid(cellMN);
+
+            timer = 0;
+            blockClearTimer = 1 / 6f;
         }
 
         private void BuildGrid(Location cellMN)
@@ -151,7 +157,7 @@ namespace Tetris.Src
             return 0 <= id.x && id.x < cellMN.x && 0 <= id.y && id.y < cellMN.y;
         }
 
-        public void CheckLines()
+        public void CheckLines(float dt)
         {
             var lines = new List<int>();
             for (int j = 0; j < cellMN.y; j++)
@@ -171,38 +177,60 @@ namespace Tetris.Src
                 }
             }
 
-            lines.Sort();
-            lines.Reverse();
-            HandleLines(lines);
+            if(lines.Count > 0)
+            {
+                lines.Sort();
+                lines.Reverse();
+                HandleLines(lines, dt);
+            }
         }
 
-        private void HandleLines(List<int> lines)
+        private void HandleLines(List<int> lines, float dt)
         {
             int clearedLines = 0;
 
-            for (int j = cellMN.y - 1; j >= 0; j--)
+            timer += dt;
+
+            if(timer > blockClearTimer)
             {
-                while (lines.Contains(j - clearedLines))
+                for (int j = cellMN.y - 1; j >= 0; j--)
                 {
-                    clearedLines++;
-                }
-
-                int shiftedRow = j - clearedLines;
-
-                if (shiftedRow >= 0)
-                {
-                    for (int i = 0; i < cellMN.x; i++)
+                    while (lines.Contains(j - clearedLines))
                     {
-                        gridValues[i, j] = gridValues[i, shiftedRow];
-                        colours[i, j] = colours[i, shiftedRow];
+                        clearedLines++;
+                    }
+
+                    int shiftedRow = j - clearedLines;
+                    if (shiftedRow >= 0)
+                    {
+                        for (int i = 0; i < cellMN.x; i++)
+                        {
+                            gridValues[i, j] = gridValues[i, shiftedRow];
+                            colours[i, j] = colours[i, shiftedRow];
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < cellMN.x; i++)
+                        {
+                            gridValues[i, j] = CellMembers.empty;
+                            colours[i, j] = Color.Transparent;
+                        }
                     }
                 }
-                else
+
+                timer = 0;
+            }
+            else
+            {
+                for (int j = cellMN.y; j >= 0; j--)
                 {
-                    for (int i = 0; i < cellMN.x; i++)
+                    if (lines.Contains(j))
                     {
-                        gridValues[i, j] = CellMembers.empty;
-                        colours[i, j] = Color.Transparent;
+                        for (int i = 0; i < cellMN.x; i++)
+                        {
+                            colours[i, j] = Color.White;
+                        }
                     }
                 }
             }

@@ -27,6 +27,8 @@ namespace Tetris.Src
         private float updateTimer;
         private readonly int fallSpeed;
 
+        private GhostBlock ghostBlock;
+
         public Block(Location pos, bool[,] shape, Color colour, Grid grid)
         {
             this.pos = pos;
@@ -41,6 +43,7 @@ namespace Tetris.Src
             timer = 0;
             updateTimer = 1;
             fallSpeed = 1;
+            ghostBlock = new GhostBlock();
         }
 
         public void Draw(SpriteBatch sb, int xOffset = 0, int yOffset = 0)

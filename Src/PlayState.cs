@@ -122,7 +122,7 @@ namespace Tetris.Src
                 }
             }
 
-            grid.CheckLines();
+            grid.CheckLines(dt);
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
