@@ -8,8 +8,10 @@ using System.Text;
 
 namespace Tetris.Src
 {
-    class Block : ICloneable
+    public class Block : ICloneable
     {
+        private Grid grid;
+
         private Location pos;
         private Location initialPos;
 
@@ -21,17 +23,16 @@ namespace Tetris.Src
 
         private bool isLive;
 
-        private List<Block> placedBlocks;
-
         private float timer;
         private float updateTimer;
         private readonly int fallSpeed;
 
-        public Block(Location pos, bool[,] shape, Color colour)
+        public Block(Location pos, bool[,] shape, Color colour, Grid grid)
         {
             this.pos = pos;
             this.shape = shape;
             this.colour = colour;
+            this.grid = grid;
 
             initialPos = pos;
 
@@ -42,7 +43,7 @@ namespace Tetris.Src
             fallSpeed = 1;
         }
 
-        public void Draw(Grid grid, SpriteBatch sb, int xOffset = 0, int yOffset = 0)
+        public void Draw(SpriteBatch sb, int xOffset = 0, int yOffset = 0)
         {
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -58,11 +59,9 @@ namespace Tetris.Src
             }
         }
 
-        public void Update(Grid grid, float dt, List<Block> placedBlocks)
+        public void Update(float dt)
         {
-            this.placedBlocks = placedBlocks;
-            
-            if (!CollisionCheck(grid))
+            if (!CollisionCheck())
             {
                 timer += dt;
                 if (timer >= updateTimer)
@@ -74,7 +73,7 @@ namespace Tetris.Src
             }
 
             int blockSpawnCheck = 0;
-            while (CollisionCheck(grid) || BlockCollisionCheck(placedBlocks))
+            while (CollisionCheck() || BlockCollisionCheck())
             {
                 pos.y -= 1;
                 isLive = false;
@@ -86,7 +85,7 @@ namespace Tetris.Src
             }
         }
 
-        public bool CollisionCheck(Grid grid)
+        public bool CollisionCheck()
         {
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -105,22 +104,19 @@ namespace Tetris.Src
             return false;
         }
 
-        public bool BlockCollisionCheck(List<Block> placedBlocks)
+        public bool BlockCollisionCheck()
         {
-            foreach (var block in placedBlocks)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
-                    for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                    if (shape[j, i])
                     {
-                        if (shape[j, i])
-                        {
-                            Location cellPos = new Location(pos.x + i, pos.y + j);
+                        Location cellPos = new Location(pos.x + i, pos.y + j);
 
-                            if (block.IsShapeHere(cellPos))
-                            {
-                                return true;
-                            }
+                        if (!grid.IsCellEmpty(cellPos))
+                        {
+                            return true;
                         }
                     }
                 }
@@ -133,7 +129,7 @@ namespace Tetris.Src
         {
             shape = RotateArrayClockwise(shape);
 
-            while (CollisionCheck(grid))
+            while (CollisionCheck())
             {
                 if (pos.x < 0)
                 {
@@ -154,7 +150,7 @@ namespace Tetris.Src
         {
             shape = RotateArrayCounterClockwise(shape);
 
-            while (CollisionCheck(grid))
+            while (CollisionCheck())
             {
                 if (pos.x < 0)
                 {
@@ -182,7 +178,7 @@ namespace Tetris.Src
             xSpeed = dir;
             pos.x += xSpeed;
 
-            if (CollisionCheck(grid) || BlockCollisionCheck(placedBlocks))
+            if (CollisionCheck() || BlockCollisionCheck())
             {
                 pos.x -= xSpeed;
             }
@@ -294,6 +290,16 @@ namespace Tetris.Src
         public void ResetPos()
         {
             pos = initialPos;
+        }
+
+        public bool[,] GetShape()
+        {
+            return shape;
+        }
+
+        public Color GetColour()
+        {
+            return colour;
         }
     }
 }

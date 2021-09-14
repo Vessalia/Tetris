@@ -15,8 +15,6 @@ namespace Tetris.Src
 
         private List<Block> blocks;
 
-        private List<Block> placedBlocks;
-
         private Block activeBlock, nextBlock, heldBlock, tempBlock;
 
         private Controller controller;
@@ -32,20 +30,18 @@ namespace Tetris.Src
 
             grid = new Grid(new Location(10, 20));
 
-            Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block oBlock = ShapeBuilder.CreateOBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block tBlock = ShapeBuilder.CreateTBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block sBlock = ShapeBuilder.CreateSBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block zBlock = ShapeBuilder.CreateZBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block jBlock = ShapeBuilder.CreateJBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
-            Block lBlock = ShapeBuilder.CreateLBlock(new Location(grid.GetCellMN().x / 2 - 2, 0));
+            Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block oBlock = ShapeBuilder.CreateOBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block tBlock = ShapeBuilder.CreateTBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block sBlock = ShapeBuilder.CreateSBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block zBlock = ShapeBuilder.CreateZBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block jBlock = ShapeBuilder.CreateJBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block lBlock = ShapeBuilder.CreateLBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
 
             blocks = new List<Block>
             {
                 iBlock, oBlock, tBlock, sBlock, zBlock, jBlock, lBlock
             };
-
-            placedBlocks = new List<Block>();
 
             activeBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
             nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
@@ -85,7 +81,7 @@ namespace Tetris.Src
                 switcher.SetNextState(new PauseState(switcher, input, this, songs));
             }
 
-            activeBlock.Update(grid, dt, placedBlocks);
+            activeBlock.Update(dt);
 
             if (!blockRefresh)
             {
@@ -115,7 +111,7 @@ namespace Tetris.Src
 
             if (!activeBlock.IsBlockLive())
             {
-                placedBlocks.Add(activeBlock);
+                grid.PlaceBlock(activeBlock);
                 heldBlockCooldown = false;
                 activeBlock = nextBlock;
                 nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
@@ -133,10 +129,7 @@ namespace Tetris.Src
         {
             grid.DrawGrid(sb);
 
-            foreach (var block in placedBlocks)
-            {
-                block.Draw(grid, sb);
-            }
+            activeBlock.Draw(sb);
 
             var nextText = "Next Block";
             var nextTextSize = fonts["default"].MeasureString(nextText);
@@ -148,12 +141,12 @@ namespace Tetris.Src
             var holdTextVec = new Vector2((Constants.Screen.X - grid.GetCellLen() * grid.GetCellMN().x) / 2 - holdTextSize.X, 0);
             sb.DrawString(fonts["default"], holdText, holdTextVec, Color.Orange);
 
-            activeBlock.Draw(grid, sb);
-            nextBlock.Draw(grid, sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, 2);
+            activeBlock.Draw(sb);
+            nextBlock.Draw(sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, 2);
 
             if (heldBlock != null)
             {
-                heldBlock.Draw(grid, sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + 2);
+                heldBlock.Draw(sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + 2);
             }
         }
     }

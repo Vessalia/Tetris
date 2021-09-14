@@ -42,40 +42,40 @@ namespace Tetris.Src
 
                     colours[i, j] = Color.Transparent;
 
-                    if(j == cellMN.y - 1 || j == cellMN.y - 2 || j == cellMN.y - 4 || j == cellMN.y - 6 || j == cellMN.y - 7 || j == cellMN.y - 8 || j == cellMN.y - 9 || j == cellMN.y - 11 || j == cellMN.y - 12 || j == cellMN.y - 13)
-                    {
-                        gridValues[i, j] = CellMembers.block;
+                    //if(j == cellMN.y - 1 || j == cellMN.y - 2 || j == cellMN.y - 4 || j == cellMN.y - 6 || j == cellMN.y - 7 || j == cellMN.y - 8 || j == cellMN.y - 9 || j == cellMN.y - 11 || j == cellMN.y - 12 || j == cellMN.y - 13)
+                    //{
+                    //    gridValues[i, j] = CellMembers.block;
 
-                        colours[i, j] = Color.Red;
-                    }
+                    //    colours[i, j] = Color.Red;
+                    //}
 
-                    if (j == cellMN.y - 3 && i != cellMN.x - 1)
-                    {
-                        gridValues[i, j] = CellMembers.block;
+                    //if (j == cellMN.y - 3 && i != cellMN.x - 1)
+                    //{
+                    //    gridValues[i, j] = CellMembers.block;
 
-                        colours[i, j] = Color.Red;
-                    }
+                    //    colours[i, j] = Color.Red;
+                    //}
 
-                    if (j == cellMN.y - 5 && i != cellMN.x - 2)
-                    {
-                        gridValues[i, j] = CellMembers.block;
+                    //if (j == cellMN.y - 5 && i != cellMN.x - 2)
+                    //{
+                    //    gridValues[i, j] = CellMembers.block;
 
-                        colours[i, j] = Color.Red;
-                    }
+                    //    colours[i, j] = Color.Red;
+                    //}
 
-                    if (j == cellMN.y - 10 && i != cellMN.x - 3)
-                    {
-                        gridValues[i, j] = CellMembers.block;
+                    //if (j == cellMN.y - 10 && i != cellMN.x - 3)
+                    //{
+                    //    gridValues[i, j] = CellMembers.block;
 
-                        colours[i, j] = Color.Red;
-                    }
+                    //    colours[i, j] = Color.Red;
+                    //}
 
-                    if (j == cellMN.y - 14 && i != cellMN.x - 4)
-                    {
-                        gridValues[i, j] = CellMembers.block;
+                    //if (j == cellMN.y - 14 && i != cellMN.x - 4)
+                    //{
+                    //    gridValues[i, j] = CellMembers.block;
 
-                        colours[i, j] = Color.Red;
-                    }
+                    //    colours[i, j] = Color.Red;
+                    //}
                 }
             }
         }
@@ -97,6 +97,11 @@ namespace Tetris.Src
                     sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.White);
 
                     sb.FillRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, colours[i, j]);
+
+                    if (gridValues[i, j] != CellMembers.empty)
+                    {
+                        sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.Black);
+                    }
                 }
             }
         }
@@ -203,6 +208,37 @@ namespace Tetris.Src
                     {
                         gridValues[i, j] = CellMembers.empty;
                         colours[i, j] = Color.Transparent;
+                    }
+                }
+            }
+        }
+
+        public bool IsCellEmpty(Location cell)
+        {
+            if (gridValues[cell.x, cell.y] != CellMembers.empty)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void PlaceBlock(Block block)
+        {
+            var shape = block.GetShape();
+
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+            {
+                int gridY = i + block.GetPos().y;
+
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                {
+                    if (shape[i, j])
+                    {
+                        int gridX = j + block.GetPos().x;
+
+                        gridValues[gridX, gridY] = CellMembers.block;
+                        colours[gridX, gridY] = block.GetColour();
                     }
                 }
             }

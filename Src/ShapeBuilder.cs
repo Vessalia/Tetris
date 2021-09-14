@@ -71,39 +71,39 @@ namespace Tetris.Src
         private static readonly Color jColour = new Color(0, 0, 255);
         private static readonly Color lColour = new Color(255, 127, 0);
 
-        public static Block CreateIBlock(Location pos)
+        public static Block CreateIBlock(Location pos, Grid grid)
         {
-            return new Block(pos, iShape, iColour);
+            return new Block(pos, iShape, iColour, grid);
         }
 
-        public static Block CreateOBlock(Location pos)
+        public static Block CreateOBlock(Location pos, Grid grid)
         {
-            return new Block(pos, oShape, oColour);
+            return new Block(pos, oShape, oColour, grid);
         }
 
-        public static Block CreateTBlock(Location pos)
+        public static Block CreateTBlock(Location pos, Grid grid)
         {
-            return new Block(pos, tShape, tColour);
+            return new Block(pos, tShape, tColour, grid);
         }
 
-        public static Block CreateSBlock(Location pos)
+        public static Block CreateSBlock(Location pos, Grid grid)
         {
-            return new Block(pos, sShape, sColour);
+            return new Block(pos, sShape, sColour, grid);
         }
 
-        public static Block CreateZBlock(Location pos)
+        public static Block CreateZBlock(Location pos, Grid grid)
         {
-            return new Block(pos, zShape, zColour);
+            return new Block(pos, zShape, zColour, grid);
         }
 
-        public static Block CreateJBlock(Location pos)
+        public static Block CreateJBlock(Location pos, Grid grid)
         {
-            return new Block(pos, jShape, jColour);
+            return new Block(pos, jShape, jColour, grid);
         }
 
-        public static Block CreateLBlock(Location pos)
+        public static Block CreateLBlock(Location pos, Grid grid)
         {
-            return new Block(pos, lShape, lColour);
+            return new Block(pos, lShape, lColour, grid);
         }
     }
 }
