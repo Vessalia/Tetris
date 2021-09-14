@@ -182,11 +182,6 @@ namespace Tetris.Src
 
             for (int j = cellMN.y - 1; j >= 0; j--)
             {
-                if (lines.Contains(j))
-                {
-                    clearedLines++;
-                }
-
                 while (lines.Contains(j - clearedLines))
                 {
                     clearedLines++;
