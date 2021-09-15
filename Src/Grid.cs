@@ -55,41 +55,6 @@ namespace Tetris.Src
                     gridValues[i, j] = CellMembers.empty;
 
                     colours[i, j] = Color.Transparent;
-
-                    //if(j == cellMN.y - 1 || j == cellMN.y - 2 || j == cellMN.y - 4 || j == cellMN.y - 6 || j == cellMN.y - 7 || j == cellMN.y - 8 || j == cellMN.y - 9 || j == cellMN.y - 11 || j == cellMN.y - 12 || j == cellMN.y - 13)
-                    //{
-                    //    gridValues[i, j] = CellMembers.block;
-
-                    //    colours[i, j] = Color.Red;
-                    //}
-
-                    //if (j == cellMN.y - 3 && i != cellMN.x - 1)
-                    //{
-                    //    gridValues[i, j] = CellMembers.block;
-
-                    //    colours[i, j] = Color.Red;
-                    //}
-
-                    //if (j == cellMN.y - 5 && i != cellMN.x - 2)
-                    //{
-                    //    gridValues[i, j] = CellMembers.block;
-
-                    //    colours[i, j] = Color.Red;
-                    //}
-
-                    //if (j == cellMN.y - 10 && i != cellMN.x - 3)
-                    //{
-                    //    gridValues[i, j] = CellMembers.block;
-
-                    //    colours[i, j] = Color.Red;
-                    //}
-
-                    //if (j == cellMN.y - 14 && i != cellMN.x - 4)
-                    //{
-                    //    gridValues[i, j] = CellMembers.block;
-
-                    //    colours[i, j] = Color.Red;
-                    //}
                 }
             }
         }
