@@ -149,18 +149,21 @@ namespace Tetris.Src
 
                 isGameOver = activeBlock.IsGameOver();
 
-                heldBlockCooldown = false;
-
-                activeBlock = nextBlock;
-                nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
-
-                controller.SetActiveBlock(activeBlock);
-
-                ghostBlock = new GhostBlock(activeBlock, grid);
-
-                if (input.IsKeyDown(Keys.Down))
+                if (!isGameOver)
                 {
-                    blockRefresh = false;
+                    heldBlockCooldown = false;
+
+                    activeBlock = nextBlock;
+                    nextBlock = (Block)blocks[randInt.Next(blocks.Count())].Clone();
+
+                    controller.SetActiveBlock(activeBlock);
+
+                    ghostBlock = new GhostBlock(activeBlock, grid);
+
+                    if (input.IsKeyDown(Keys.Down))
+                    {
+                        blockRefresh = false;
+                    }
                 }
             }
 
@@ -186,6 +189,16 @@ namespace Tetris.Src
             var scoreTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, Constants.Screen.Y - scoreTextSize.Y);
             sb.DrawString(fonts["default"], scoreText, scoreTextVec, Color.Crimson);
 
+            if (isGameOver)
+            {
+                var text = "YOU FUCKING LOSE YOU FUCKING LOSER ASS BITCH";
+                var font = fonts["default"];
+                var textSize = font.MeasureString(text);
+
+                sb.DrawString(font, text, new Vector2(Constants.Screen.X, Constants.Screen.Y) / 2 - textSize / 2, Color.Black);
+                return;
+            }
+
             if (!grid.IsClearing())
             {
                 activeBlock.Draw(sb);
@@ -201,16 +214,6 @@ namespace Tetris.Src
             if (heldBlock != null)
             {
                 heldBlock.Draw(sb, - heldBlock.GetPos().x - heldBlock.GetShapeMN().x, -heldBlock.GetPos().y + 2);
-            }
-
-            if (isGameOver)
-            {
-                var text = "YOU FUCKING LOSE YOU FUCKING LOSER ASS BITCH";
-                var font = fonts["default"];
-                var textSize = font.MeasureString(text);
-
-                sb.DrawString(font, text, new Vector2(Constants.Screen.X, Constants.Screen.Y) / 2 - textSize / 2, Color.Black);
-                return;
             }
         }
     }
