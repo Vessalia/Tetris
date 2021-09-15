@@ -24,6 +24,10 @@ namespace Tetris.Src
         private float timer;
         private float blockClearTimer;
 
+        private bool clearing;
+
+        private int score;
+
         public Grid(Location cellMN)
         {
             this.cellMN = cellMN;
@@ -32,6 +36,10 @@ namespace Tetris.Src
 
             timer = 0;
             blockClearTimer = 1 / 6f;
+
+            clearing = false;
+
+            score = 0;
         }
 
         private void BuildGrid(Location cellMN)
@@ -220,6 +228,9 @@ namespace Tetris.Src
                 }
 
                 timer = 0;
+                clearing = false;
+
+                score += ScoreGained(lines);
             }
             else
             {
@@ -233,6 +244,8 @@ namespace Tetris.Src
                         }
                     }
                 }
+
+                clearing = true;
             }
         }
 
@@ -265,6 +278,40 @@ namespace Tetris.Src
                     }
                 }
             }
+        }
+
+        public bool IsClearing()
+        {
+            return clearing;
+        }
+
+        private int ScoreGained(List<int> lines)
+        {
+            if (lines.Count == 1)
+            {
+                return 40;
+            }
+            else if (lines.Count == 2)
+            {
+                return 100;
+            }
+            else if (lines.Count == 3)
+            {
+                return 300;
+            }
+            else if (lines.Count == 4)
+            {
+                return 1200;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int GetScore()
+        {
+            return score;
         }
     }
 }

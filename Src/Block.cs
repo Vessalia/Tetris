@@ -18,16 +18,16 @@ namespace Tetris.Src
         private Color colour;
 
         private bool[,] shape;
+        private bool[,] initialShape;
 
         private int xSpeed;
 
         private bool isLive;
+        private bool isGameOver;
 
         private float timer;
         private float updateTimer;
         private readonly int fallSpeed;
-
-        private GhostBlock ghostBlock;
 
         public Block(Location pos, bool[,] shape, Color colour, Grid grid)
         {
@@ -37,13 +37,14 @@ namespace Tetris.Src
             this.grid = grid;
 
             initialPos = pos;
+            initialShape = shape;
 
             isLive = true;
+            isGameOver = false;
 
             timer = 0;
             updateTimer = 1;
             fallSpeed = 1;
-            ghostBlock = new GhostBlock();
         }
 
         public void Draw(SpriteBatch sb, int xOffset = 0, int yOffset = 0)
@@ -75,20 +76,21 @@ namespace Tetris.Src
                 }
             }
 
-            int blockSpawnCheck = 0;
             while (CollisionCheck() || BlockCollisionCheck())
             {
                 pos.y -= 1;
                 isLive = false;
-                blockSpawnCheck++;
-                if(blockSpawnCheck > grid.GetCellMN().y)
+
+                if(pos.y + shape.GetUpperBound(1) + 1 < 0)
                 {
+                    pos.y = 0;
+                    isGameOver = true;
                     break;
                 }
             }
         }
 
-        public bool CollisionCheck()
+        private bool CollisionCheck()
         {
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -107,7 +109,7 @@ namespace Tetris.Src
             return false;
         }
 
-        public bool BlockCollisionCheck()
+        private bool BlockCollisionCheck()
         {
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -256,30 +258,6 @@ namespace Tetris.Src
             return this.MemberwiseClone();
         }
 
-        public bool IsShapeHere(Location cellPos)
-        {
-            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
-            {
-                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
-                {
-                    if (shape[j, i])
-                    {
-                        if (pos + new Location (i, j) == cellPos)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public void AddPos(Location dir)
-        {
-            pos += dir;
-        }
-
         public Location GetPos()
         {
             return pos;
@@ -300,9 +278,19 @@ namespace Tetris.Src
             return shape;
         }
 
+        public void ResetShape()
+        {
+            shape = initialShape;
+        }
+
         public Color GetColour()
         {
             return colour;
+        }
+
+        public bool IsGameOver()
+        {
+            return isGameOver;
         }
     }
 }
