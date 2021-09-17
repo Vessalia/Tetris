@@ -27,6 +27,7 @@ namespace Tetris.Src
         private bool clearing;
 
         private int score;
+        private int level;
 
         public Grid(Location cellMN)
         {
@@ -40,6 +41,7 @@ namespace Tetris.Src
             clearing = false;
 
             score = 0;
+            level = 1;
         }
 
         private void BuildGrid(Location cellMN)
@@ -196,6 +198,7 @@ namespace Tetris.Src
                 clearing = false;
 
                 score += ScoreGained(lines);
+                level += lines.Count;
             }
             else
             {
@@ -277,6 +280,11 @@ namespace Tetris.Src
         public int GetScore()
         {
             return score;
+        }
+
+        public int GetLevel()
+        {
+            return  1 + level / 10;
         }
     }
 }

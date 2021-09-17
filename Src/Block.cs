@@ -24,9 +24,11 @@ namespace Tetris.Src
 
         private bool isLive;
         private bool isGameOver;
+        private bool setTimers;
 
         private float timer;
         private float updateTimer;
+        private float currUpdateTimer;
         private readonly int fallSpeed;
 
         public Block(Location pos, bool[,] shape, Color colour, Grid grid)
@@ -41,9 +43,11 @@ namespace Tetris.Src
 
             isLive = true;
             isGameOver = false;
+            setTimers = true;
 
             timer = 0;
             updateTimer = 1;
+            currUpdateTimer = updateTimer;
             fallSpeed = 1;
         }
 
@@ -65,6 +69,12 @@ namespace Tetris.Src
 
         public void Update(float dt)
         {
+            if (setTimers)
+            {
+                ResetTimers();
+                setTimers = false;
+            }
+
             if (!CollisionCheck())
             {
                 timer += dt;
@@ -175,7 +185,7 @@ namespace Tetris.Src
         private void ResetTimers()
         {
             timer = 0;
-            updateTimer = 1;
+            updateTimer = currUpdateTimer;
         }
 
         public void HorizontalTranslation(Grid grid, int dir)
@@ -196,7 +206,7 @@ namespace Tetris.Src
 
         public void VerticalTranslation(float clockDiv)
         {
-            updateTimer = clockDiv;
+            updateTimer = currUpdateTimer * clockDiv;
         }
 
         private static bool[,] RotateArrayClockwise(bool[,] src)
@@ -251,6 +261,17 @@ namespace Tetris.Src
             }
 
             return dst;
+        }
+
+        public void LevelSpeedUp(int level)
+        {
+            int levelSpeedCap = 15;
+
+            if (level >= levelSpeedCap)
+            {
+                currUpdateTimer = 1 / 2f;
+            }
+            currUpdateTimer = 1 - level / (float) levelSpeedCap;
         }
 
         public object Clone()

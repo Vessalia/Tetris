@@ -30,6 +30,8 @@ namespace Tetris.Src
         private bool isGameOver;
 
         private int score;
+        private int level;
+        private int prevLevel;
 
         public PlayState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
         {
@@ -109,6 +111,8 @@ namespace Tetris.Src
                 switcher.SetNextState(new PauseState(switcher, input, this, songs));
             }
 
+            activeBlock.LevelSpeedUp(level);
+
             if (!grid.IsClearing())
             {
                 activeBlock.Update(dt);
@@ -169,6 +173,7 @@ namespace Tetris.Src
 
             grid.CheckLines(dt);
             score = grid.GetScore();
+            level = grid.GetLevel();
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
@@ -188,6 +193,11 @@ namespace Tetris.Src
             var scoreTextSize = fonts["default"].MeasureString(scoreText);
             var scoreTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, Constants.Screen.Y - scoreTextSize.Y);
             sb.DrawString(fonts["default"], scoreText, scoreTextVec, Color.Crimson);
+
+            var levelText = "Level: " + $"{level}";
+            var levelTextSize = fonts["default"].MeasureString(scoreText);
+            var levelTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, Constants.Screen.Y - scoreTextSize.Y - levelTextSize.Y);
+            sb.DrawString(fonts["default"], levelText, levelTextVec, Color.MistyRose);
 
             if (isGameOver)
             {
