@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,12 @@ namespace Tetris.Src
     {
         private static readonly int Width = 1280;
         private static readonly int Height = 720;
+
+        public static Dictionary<string, Keys> keyBindings = new Dictionary<string, Keys> 
+        {
+            ["left"] = Keys.Left, ["right"] = Keys.Right, ["up"] = Keys.Up, ["down"] = Keys.Down,
+            ["rotate cw"] = Keys.X, ["rotate ccw"] = Keys.Z, ["hold"] = Keys.C
+        };
 
         public static readonly Vector2 Screen = new Vector2(Width, Height);
 
@@ -34,6 +41,18 @@ namespace Tetris.Src
             gridPos.Y = (Constants.Screen.Y - cellMN.y * cellLen) / 2 + gridIndicies.y * cellLen;
 
             return gridPos;
+        }
+
+        public static void SetKeyBindings(string name, Keys key)
+        {
+            if (keyBindings.ContainsKey(name))
+            {
+                keyBindings[name] = key;
+            }
+            else
+            {
+                keyBindings.Add(name, key);
+            }
         }
     }
 }

@@ -22,7 +22,14 @@ namespace Tetris.Src
                 switcher.SetNextState(new PlayState(switcher, input, songs));
             };
 
-            var exitPos = Constants.Screen / 2 + new Vector2(0, 100);
+            var settingsPos = Constants.Screen / 2 + new Vector2(0, 100);
+
+            Action settingsAction = () =>
+            {
+                switcher.SetNextState(new SettingsState(switcher, input, songs));
+            };
+
+            var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
 
             Action exitAction = () =>
             {
@@ -30,6 +37,7 @@ namespace Tetris.Src
             };
 
             menu.AddButton(playPos, Color.White, "Play", playAction);
+            menu.AddButton(settingsPos, Color.White, "Settings", settingsAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
 
             MediaPlayer.Stop();

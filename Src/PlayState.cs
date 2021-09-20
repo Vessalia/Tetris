@@ -31,7 +31,6 @@ namespace Tetris.Src
 
         private int score;
         private int level;
-        private int prevLevel;
 
         public PlayState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
         {

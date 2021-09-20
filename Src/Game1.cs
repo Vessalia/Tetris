@@ -39,7 +39,8 @@ namespace Tetris.Src
             songs = new Dictionary<string, Song>
             {
                 ["menu"] = Content.Load<Song>("Tetris (2008) OST - Menu Loop"),
-                ["game"] = Content.Load<Song>("Tetris 99 - Main Theme")
+                ["game"] = Content.Load<Song>("Tetris 99 - Main Theme"),
+                ["settings"] = Content.Load<Song>("Internet Settings")
             };
 
             gameState = new MainMenuState(this, input, songs);
@@ -80,14 +81,13 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            if (gameState is MainMenuState) // bad practice
-            {
-                GraphicsDevice.Clear(Color.LightBlue);
-            }
-
-            else
+            if (gameState is PlayState || gameState is HighscoreState) // bad practice
             {
                 GraphicsDevice.Clear(Color.DimGray);
+            }
+            else
+            {
+                GraphicsDevice.Clear(Color.LightBlue);
             }
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);

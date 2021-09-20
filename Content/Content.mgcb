@@ -20,6 +20,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Arial32.spritefont
 
+#begin Internet Settings.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Internet Settings.mp3
+
 #begin ScoreFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

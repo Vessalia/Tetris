@@ -32,3 +32,5 @@ C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetri
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris 99 - Main Theme.xnb
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris® (2008) OST - Menu Loop.ogg
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris® (2008) OST - Menu Loop.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Internet Settings.ogg
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Internet Settings.xnb
