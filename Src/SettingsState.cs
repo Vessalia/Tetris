@@ -11,7 +11,7 @@ namespace Tetris.Src
     {
         private readonly Menu menu;
 
-        public SettingsState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
+        public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             menu = new Menu();
 
@@ -33,17 +33,14 @@ namespace Tetris.Src
 
             Action menuAction = () =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, songs));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
             };
 
             menu.AddButton(audioPos, Color.White, "Volume", audioAction);
             menu.AddButton(keysPos, Color.White, "Key Bindings", keysAction);
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
 
-            MediaPlayer.Stop();
-            MediaPlayer.Volume = 0.75f;
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(songs["settings"]);
+            audioManager.PlaySong("settings", 0.75f);
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)

@@ -15,7 +15,7 @@ namespace Tetris.Src
         private SpriteBatch _spriteBatch;
         private Dictionary<string, SpriteFont> fonts;
 
-        private Dictionary<string, Song> songs;
+        private AudioManager audioManager;
 
         private GameState gameState;
 
@@ -36,14 +36,9 @@ namespace Tetris.Src
 
             input = new Input();
 
-            songs = new Dictionary<string, Song>
-            {
-                ["menu"] = Content.Load<Song>("Tetris (2008) OST - Menu Loop"),
-                ["game"] = Content.Load<Song>("Tetris 99 - Main Theme"),
-                ["settings"] = Content.Load<Song>("Internet Settings")
-            };
+            audioManager = new AudioManager(Content);
 
-            gameState = new MainMenuState(this, input, songs);
+            gameState = new MainMenuState(this, input, audioManager);
 
             base.Initialize();
         }

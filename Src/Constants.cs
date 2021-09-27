@@ -13,8 +13,14 @@ namespace Tetris.Src
 
         public static Dictionary<string, Keys> keyBindings = new Dictionary<string, Keys> 
         {
-            ["left"] = Keys.Left, ["right"] = Keys.Right, ["up"] = Keys.Up, ["down"] = Keys.Down,
-            ["rotate cw"] = Keys.X, ["rotate ccw"] = Keys.Z, ["hold"] = Keys.C
+            ["left"] = Keys.Left,
+            ["right"] = Keys.Right,
+            ["up"] = Keys.Up,
+            ["down"] = Keys.Down,
+
+            ["rotate cw"] = Keys.X,
+            ["rotate ccw"] = Keys.Z,
+            ["hold"] = Keys.C
         };
 
         public static readonly Vector2 Screen = new Vector2(Width, Height);

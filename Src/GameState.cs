@@ -10,13 +10,13 @@ namespace Tetris.Src
     {
         protected IGameStateSwitcher switcher;
         protected Input input;
-        protected Dictionary<string, Song> songs;
+        protected AudioManager audioManager;
 
-        public GameState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs)
+        public GameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager)
         {
             this.switcher = switcher;
             this.input = input;
-            this.songs = songs;
+            this.audioManager = audioManager;
         }
 
         public abstract void HandleInput();

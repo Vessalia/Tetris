@@ -32,7 +32,7 @@ namespace Tetris.Src
         private int score;
         private int level;
 
-        public PlayState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
+        public PlayState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             randInt = new Random();
 
@@ -63,9 +63,7 @@ namespace Tetris.Src
             heldBlockCooldown = false;
             isGameOver = false;
 
-            MediaPlayer.Stop();
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(songs["game"]);
+            audioManager.PlaySong("game", 1);
 
             timer = 4;
             score = 0;
@@ -98,16 +96,14 @@ namespace Tetris.Src
                 }
                 else
                 {
-                    switcher.SetNextState(new MainMenuState(switcher, input, songs));
+                    switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
                 }
                 return;
             }
 
-            MediaPlayer.Volume = 1;
-
             if (input.IsKeyJustPressed(Keys.Escape))
             {
-                switcher.SetNextState(new PauseState(switcher, input, this, songs));
+                switcher.SetNextState(new PauseState(switcher, input, this, audioManager));
             }
 
             activeBlock.LevelSpeedUp(level);

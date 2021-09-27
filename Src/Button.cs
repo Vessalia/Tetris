@@ -64,5 +64,15 @@ namespace Tetris.Src
         {
             this.colour = colour;
         }
+
+        public void SetPos(Vector2 newPos)
+        {
+            pos = newPos;
+        }
+
+        public Vector2 GetPos()
+        {
+            return pos;
+        }
     }
 }

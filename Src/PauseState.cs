@@ -15,7 +15,7 @@ namespace Tetris.Src
 
         private readonly GameState gameState;
 
-        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState, Dictionary<string, Song> songs) : base(switcher, input, songs)
+        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             menu = new Menu();
 
@@ -26,13 +26,15 @@ namespace Tetris.Src
             Action resumeAction = () =>
             {
                 switcher.SetNextState(gameState);
+                audioManager.SetVolume(1);
             };
 
             var menuPos = Constants.Screen / 2 + new Vector2(0, 100);
 
             Action menuAction = () =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, songs));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
+                audioManager.SetVolume(1);
             };
 
             var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
@@ -46,7 +48,7 @@ namespace Tetris.Src
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
 
-            MediaPlayer.Volume = 0.2f;
+            audioManager.SetVolume(0.2f);
         }
 
         public override void HandleInput()

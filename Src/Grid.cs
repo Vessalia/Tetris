@@ -154,8 +154,6 @@ namespace Tetris.Src
 
             if(lines.Count > 0)
             {
-                lines.Sort();
-                lines.Reverse();
                 HandleLines(lines, dt);
             }
         }

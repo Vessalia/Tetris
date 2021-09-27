@@ -9,7 +9,7 @@ namespace Tetris.Src
 {
     public class Menu
     {
-        private readonly List<Button> buttons;
+        private List<Button> buttons;
 
         public Menu()
         {
@@ -56,6 +56,20 @@ namespace Tetris.Src
                     b.SetPressed(false);
                 }
             }
+        }
+
+        public void ShiftButtons(int num, Vector2 pos)
+        {
+            for (int i = num; i < buttons.Count; i++)
+            {
+                var initialPos = buttons[i].GetPos();
+                buttons[i].SetPos(initialPos + pos);
+            }
+        }
+
+        public int NumButtons()
+        {
+            return buttons.Count;
         }
     }
 }

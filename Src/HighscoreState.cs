@@ -8,7 +8,7 @@ namespace Tetris.Src
 {
     class HighscoreState : GameState
     {
-        public HighscoreState(IGameStateSwitcher switcher, Input input, Dictionary<string, Song> songs) : base(switcher, input, songs)
+        public HighscoreState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
 
         }
