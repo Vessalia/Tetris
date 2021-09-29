@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,11 +16,18 @@ namespace Tetris.Src
         {
             menu = new Menu();
 
-            var audioPos = Constants.Screen / 2;
+            var volumeIncPos = Constants.Screen / 2 + new Vector2(120, 0);
 
-            Action audioAction = () =>
+            Action volumeIncAction = () =>
             {
-                
+                audioManager.IncrementVolume(5);
+            };
+
+            var volumeDecPos = Constants.Screen / 2 - new Vector2(120, 0);
+
+            Action volumeDecAction = () =>
+            {
+                audioManager.IncrementVolume(-5);
             };
 
             var keysPos = Constants.Screen / 2 + new Vector2(0, 100);
@@ -36,7 +44,8 @@ namespace Tetris.Src
                 switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
             };
 
-            menu.AddButton(audioPos, Color.White, "Volume", audioAction);
+            menu.AddButton(volumeIncPos, Color.White, "+", volumeIncAction, 50);
+            menu.AddButton(volumeDecPos, Color.White, "-", volumeDecAction, 50);
             menu.AddButton(keysPos, Color.White, "Key Bindings", keysAction);
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
 
@@ -47,10 +56,16 @@ namespace Tetris.Src
         {
             menu.DrawButtons(sb, fonts["default"]);
 
-            var text = "Settings";
-            var textSize = fonts["default"].MeasureString(text);
+            var titleText = "Settings";
+            var titleTextSize = fonts["title"].MeasureString(titleText);
 
-            sb.DrawString(fonts["default"], text, new Vector2(Constants.Screen.X / 2, 200) - textSize / 2, Color.IndianRed);
+            var volumeText = "Volume";
+            var volumeTextSize = fonts["default"].MeasureString(volumeText);
+
+            sb.DrawString(fonts["title"], titleText, new Vector2(Constants.Screen.X / 2, 200) - titleTextSize / 2, Color.IndianRed);
+            sb.DrawString(fonts["default"], volumeText, (Constants.Screen - volumeTextSize) / 2 - new Vector2(0, volumeTextSize.Y), Color.IndianRed);
+            DrawUiElements(fonts, sb);
+
         }
 
         public override void HandleInput()
@@ -59,5 +74,15 @@ namespace Tetris.Src
         }
 
         public override void Update(float timeStep) { }
+
+        private void DrawUiElements(Dictionary <string, SpriteFont> fonts, SpriteBatch sb)
+        {
+            var volumeText = $"{audioManager.GetMasterVolume()}";
+            var volumeTextSize = fonts["default"].MeasureString(volumeText);
+
+            var volumeWidth = 120;
+            sb.FillRectangle((Constants.Screen.X - volumeWidth) / 2, (Constants.Screen.Y - volumeTextSize.Y) / 2, volumeWidth, volumeTextSize.Y, Color.White);
+            sb.DrawString(fonts["default"], volumeText, (Constants.Screen - volumeTextSize) / 2, Color.Black);
+        }
     }
 }

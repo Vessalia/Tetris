@@ -17,11 +17,13 @@ namespace Tetris.Src
 
         private Color colour;
 
+        private Vector2 dim = Vector2.Zero;
+
         private readonly Action action;
 
         private readonly string text;
 
-        public Button(Vector2 pos, Color colour, string text, Action action)
+        public Button(Vector2 pos, Color colour, string text, Action action, int width, int height)
         {
             textSize = new Vector2();
             wasPressed = false;
@@ -30,13 +32,39 @@ namespace Tetris.Src
             this.colour = colour;
             this.text = text;
             this.action = action;
+
+            if (width != 0)
+            {
+                dim += new Vector2(width, 0);
+            }
+            if (height != 0)
+            {
+                dim += new Vector2(0, height);
+            }
         }
 
 
         public void DrawButton(SpriteBatch sb, SpriteFont font)
         {
             textSize = font.MeasureString(text);
-            sb.FillRectangle((int)pos.X - textSize.X / 2, (int)pos.Y - textSize.Y / 2, (int)textSize.X, (int)textSize.Y, colour);
+
+            if (dim == Vector2.Zero)
+            {
+                sb.FillRectangle(pos.X - textSize.X / 2, pos.Y - textSize.Y / 2, textSize.X, textSize.Y, colour);
+            }
+            else if (dim.Y == 0)
+            {
+                sb.FillRectangle(pos.X - dim.X / 2, pos.Y - textSize.Y / 2, dim.X, textSize.Y, colour);
+            }
+            else if (dim.X == 0)
+            {
+                sb.FillRectangle(pos.X - textSize.X / 2, pos.Y - dim.Y / 2, textSize.X, dim.Y, colour);
+            }
+            else
+            {
+                sb.FillRectangle(pos.X - dim.X / 2, pos.Y - dim.Y / 2, dim.X, dim.Y, colour);
+            }
+
             sb.DrawString(font, text, pos - textSize / 2, Color.Black);
         }
 

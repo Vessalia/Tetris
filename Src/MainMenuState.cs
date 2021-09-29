@@ -15,21 +15,30 @@ namespace Tetris.Src
         {
             menu = new Menu();
 
-            var playPos = Constants.Screen / 2;
+            var buttonSpacing = new Vector2(0, 100);
+
+            var playPos = Constants.Screen / 2 - new Vector2(0, 30);
 
             Action playAction = () =>
             {
                 switcher.SetNextState(new PlayState(switcher, input, audioManager));
             };
 
-            var settingsPos = Constants.Screen / 2 + new Vector2(0, 100);
+            var settingsPos = playPos + buttonSpacing;
 
             Action settingsAction = () =>
             {
                 switcher.SetNextState(new SettingsState(switcher, input, audioManager));
             };
 
-            var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
+            var highscoresPos = playPos + 2 * buttonSpacing;
+
+            Action highscoresAction = () =>
+            {
+                switcher.SetNextState(new HighscoreState(switcher, input, audioManager));
+            };
+
+            var exitPos = playPos + 3 * buttonSpacing;
 
             Action exitAction = () =>
             {
@@ -38,6 +47,7 @@ namespace Tetris.Src
 
             menu.AddButton(playPos, Color.White, "Play", playAction);
             menu.AddButton(settingsPos, Color.White, "Settings", settingsAction);
+            menu.AddButton(highscoresPos, Color.White, "Highscores", highscoresAction);
             menu.AddButton(exitPos, Color.White, "Exit", exitAction);
 
             audioManager.PlaySong("menu", 1);

@@ -26,9 +26,9 @@ namespace Tetris.Src
         }
 
 
-        public void AddButton(Vector2 pos, Color colour, string text, Action action)
+        public void AddButton(Vector2 pos, Color colour, string text, Action action, int width = 0, int height = 0)
         {
-            buttons.Add(new Button(pos, colour, text, action));
+            buttons.Add(new Button(pos, colour, text, action, width, height));
         }
 
         public void HandleButtonInput()

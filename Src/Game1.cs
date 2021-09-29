@@ -59,6 +59,8 @@ namespace Tetris.Src
         {
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            audioManager.Update();
+
             input.Update();
 
             gameState.HandleInput();
@@ -76,7 +78,7 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            if (gameState is PlayState || gameState is HighscoreState) // bad practice
+            if (gameState is PlayState || gameState is HighscoreState || gameState is HighscoreState) // bad practice
             {
                 GraphicsDevice.Clear(Color.DimGray);
             }

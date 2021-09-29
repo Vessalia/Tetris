@@ -10,7 +10,7 @@ namespace Tetris.Src
     {
         private Dictionary<string, Song> songs;
 
-        private float masterVolume = 1;
+        private int masterVolume = 100;
 
         public AudioManager(ContentManager Content)
         {
@@ -22,23 +22,44 @@ namespace Tetris.Src
             };
         }
 
+        public void Update()
+        {
+            MediaPlayer.Volume = masterVolume / 100f;
+        }
+
         public void PlaySong(string song, float volume, bool isRepeating = true)
         {
             MediaPlayer.Stop();
-            MediaPlayer.Volume = masterVolume * volume;
+            MediaPlayer.Volume = InternalMasterVolume() * volume;
             MediaPlayer.IsRepeating = isRepeating;
             MediaPlayer.Play(songs[song]);
         }
 
         public void ResumeSong(float volume, bool isRepeating = true)
         {
-            MediaPlayer.Volume = masterVolume * volume;
+            MediaPlayer.Volume = InternalMasterVolume() * volume;
             MediaPlayer.IsRepeating = isRepeating;
         }
 
         public void SetVolume(float volume)
         {
-            MediaPlayer.Volume = masterVolume * volume;
+            MediaPlayer.Volume = InternalMasterVolume() * volume;
+        }
+
+        public void IncrementVolume(int increment)
+        {
+            int newVolume = masterVolume + increment;
+            masterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
+        }
+
+        public int GetMasterVolume()
+        {
+            return masterVolume;
+        }
+
+        private float InternalMasterVolume()
+        {
+            return masterVolume / 100f;
         }
     }
 }
