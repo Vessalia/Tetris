@@ -19,28 +19,28 @@ namespace Tetris.Src
 
             var playPos = Constants.Screen / 2 - new Vector2(0, 30);
 
-            Action playAction = () =>
+            Action<Button> playAction = (Button button) =>
             {
                 switcher.SetNextState(new PlayState(switcher, input, audioManager));
             };
 
             var settingsPos = playPos + buttonSpacing;
 
-            Action settingsAction = () =>
+            Action<Button> settingsAction = (Button button) =>
             {
                 switcher.SetNextState(new SettingsState(switcher, input, audioManager));
             };
 
             var highscoresPos = playPos + 2 * buttonSpacing;
 
-            Action highscoresAction = () =>
+            Action<Button> highscoresAction = (Button button) =>
             {
                 switcher.SetNextState(new HighscoreState(switcher, input, audioManager));
             };
 
             var exitPos = playPos + 3 * buttonSpacing;
 
-            Action exitAction = () =>
+            Action<Button> exitAction = (Button button) =>
             {
                 switcher.SetNextState(null);
             };
@@ -67,7 +67,7 @@ namespace Tetris.Src
             var text = "Tetris";
             var textSize = fonts["title"].MeasureString(text);
 
-            sb.DrawString(fonts["title"], text, new Vector2(Constants.Screen.X / 2, 200) - textSize / 2, Color.Red);
+            sb.DrawString(fonts["title"], text, new Vector2(Constants.Screen.X / 2, 100) - textSize / 2, Color.Red);
         }
     }
 }

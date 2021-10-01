@@ -23,7 +23,7 @@ namespace Tetris.Src
 
             var resumePos = Constants.Screen / 2;
 
-            Action resumeAction = () =>
+            Action<Button> resumeAction = (Button button) =>
             {
                 switcher.SetNextState(gameState);
                 audioManager.SetVolume(1);
@@ -31,7 +31,7 @@ namespace Tetris.Src
 
             var menuPos = Constants.Screen / 2 + new Vector2(0, 100);
 
-            Action menuAction = () =>
+            Action<Button> menuAction = (Button button) =>
             {
                 switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
                 audioManager.SetVolume(1);
@@ -39,7 +39,7 @@ namespace Tetris.Src
 
             var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
 
-            Action exitAction = () =>
+            Action<Button> exitAction = (Button button) =>
             {
                 switcher.SetNextState(null);
             };

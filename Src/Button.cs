@@ -19,11 +19,11 @@ namespace Tetris.Src
 
         private Vector2 dim = Vector2.Zero;
 
-        private readonly Action action;
+        private readonly Action<Button> action;
 
-        private readonly string text;
+        private string text;
 
-        public Button(Vector2 pos, Color colour, string text, Action action, int width, int height)
+        public Button(Vector2 pos, Color colour, string text, Action<Button> action, int width, int height)
         {
             textSize = new Vector2();
             wasPressed = false;
@@ -70,12 +70,27 @@ namespace Tetris.Src
 
         public bool MouseButtonCheck()
         {
-            return RectangleF.Contains(new RectangleF(pos - textSize / 2, textSize), Mouse.GetState().Position) == true;
+            if(dim == Vector2.Zero)
+            {
+                return RectangleF.Contains(new RectangleF(pos - textSize / 2, textSize), Mouse.GetState().Position);
+            }
+            else if(dim.Y == 0)
+            {
+                return RectangleF.Contains(new RectangleF(pos - new Vector2(dim.X, textSize.Y) / 2, new Vector2(dim.X, textSize.Y)), Mouse.GetState().Position);
+            }
+            else if(dim.X == 0)
+            {
+                return RectangleF.Contains(new RectangleF(pos - new Vector2(textSize.X, dim.Y) / 2, new Vector2(textSize.X, dim.Y)), Mouse.GetState().Position);
+            }
+            else
+            {
+                return RectangleF.Contains(new RectangleF(pos - dim / 2, dim), Mouse.GetState().Position);
+            }
         }
 
         public void OnRelease()
         {
-            action();
+            action(this);
         }
 
         public bool GetPressed()
@@ -101,6 +116,11 @@ namespace Tetris.Src
         public Vector2 GetPos()
         {
             return pos;
+        }
+
+        public void SetText(string text)
+        {
+            this.text = text;
         }
     }
 }
