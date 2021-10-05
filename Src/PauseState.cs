@@ -23,13 +23,15 @@ namespace Tetris.Src
 
             var resumePos = Constants.Screen / 2;
 
+            var buttonSpacing = new Vector2(0, Constants.Screen.Y / 7.2f);
+
             Action<Button> resumeAction = (Button button) =>
             {
                 switcher.SetNextState(gameState);
                 audioManager.SetVolume(1);
             };
 
-            var menuPos = Constants.Screen / 2 + new Vector2(0, 100);
+            var menuPos = resumePos + buttonSpacing;
 
             Action<Button> menuAction = (Button button) =>
             {
@@ -37,7 +39,7 @@ namespace Tetris.Src
                 audioManager.SetVolume(1);
             };
 
-            var exitPos = Constants.Screen / 2 + new Vector2(0, 200);
+            var exitPos = resumePos + 2 * buttonSpacing;
 
             Action<Button> exitAction = (Button button) =>
             {
@@ -61,6 +63,7 @@ namespace Tetris.Src
             if (input.IsKeyJustPressed(Keys.Escape))
             {
                 switcher.SetNextState(gameState);
+                audioManager.SetVolume(1);
             }
         }
 

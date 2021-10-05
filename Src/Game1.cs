@@ -59,8 +59,6 @@ namespace Tetris.Src
         {
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            audioManager.Update();
-
             input.Update();
 
             gameState.HandleInput();

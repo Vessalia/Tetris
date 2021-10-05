@@ -22,11 +22,6 @@ namespace Tetris.Src
             };
         }
 
-        public void Update()
-        {
-            MediaPlayer.Volume = masterVolume / 100f;
-        }
-
         public void PlaySong(string song, float volume, bool isRepeating = true)
         {
             MediaPlayer.Stop();
@@ -50,6 +45,7 @@ namespace Tetris.Src
         {
             int newVolume = masterVolume + increment;
             masterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
+            MediaPlayer.Volume = InternalMasterVolume();
         }
 
         public int GetMasterVolume()

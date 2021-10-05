@@ -15,9 +15,9 @@ namespace Tetris.Src
         {
             menu = new Menu();
 
-            var buttonSpacing = new Vector2(0, 100);
+            var buttonSpacing = new Vector2(0, Constants.Screen.Y / 7.2f);
 
-            var playPos = Constants.Screen / 2 - new Vector2(0, 30);
+            var playPos = Constants.Screen / 2 - new Vector2(0, Constants.Screen.Y / 24f);
 
             Action<Button> playAction = (Button button) =>
             {
