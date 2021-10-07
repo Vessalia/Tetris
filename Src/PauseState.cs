@@ -15,7 +15,7 @@ namespace Tetris.Src
 
         private readonly GameState gameState;
 
-        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState, AudioManager audioManager) : base(switcher, input, audioManager)
+        public PauseState(IGameStateSwitcher switcher, Input input, GameState gameState, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
         {
             menu = new Menu();
 
@@ -35,7 +35,7 @@ namespace Tetris.Src
 
             Action<Button> menuAction = (Button button) =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager, fileManager));
                 audioManager.SetVolume(1);
             };
 

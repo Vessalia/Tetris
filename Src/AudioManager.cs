@@ -18,7 +18,8 @@ namespace Tetris.Src
             {
                 ["menu"] = Content.Load<Song>("Tetris (2008) OST - Menu Loop"),
                 ["game"] = Content.Load<Song>("Tetris 99 - Main Theme"),
-                ["settings"] = Content.Load<Song>("Internet Settings")
+                ["settings"] = Content.Load<Song>("Internet Settings"),
+                ["highscores"] = Content.Load<Song>("Outer Wilds Original Soundtrack #03 - The Museum")
             };
         }
 

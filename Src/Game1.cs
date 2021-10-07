@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Tetris.Src
 {
@@ -16,6 +18,7 @@ namespace Tetris.Src
         private Dictionary<string, SpriteFont> fonts;
 
         private AudioManager audioManager;
+        private FileManager fileManager;
 
         private GameState gameState;
 
@@ -38,7 +41,9 @@ namespace Tetris.Src
 
             audioManager = new AudioManager(Content);
 
-            gameState = new MainMenuState(this, input, audioManager);
+            fileManager = new FileManager();
+
+            gameState = new MainMenuState(this, input, audioManager, fileManager);
 
             base.Initialize();
         }

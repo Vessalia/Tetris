@@ -11,7 +11,7 @@ namespace Tetris.Src
     {
         private readonly Menu menu;
 
-        public MainMenuState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
+        public MainMenuState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
         {
             menu = new Menu();
 
@@ -21,21 +21,21 @@ namespace Tetris.Src
 
             Action<Button> playAction = (Button button) =>
             {
-                switcher.SetNextState(new PlayState(switcher, input, audioManager));
+                switcher.SetNextState(new PlayState(switcher, input, audioManager, fileManager));
             };
 
             var settingsPos = playPos + buttonSpacing;
 
             Action<Button> settingsAction = (Button button) =>
             {
-                switcher.SetNextState(new SettingsState(switcher, input, audioManager));
+                switcher.SetNextState(new SettingsState(switcher, input, audioManager, fileManager));
             };
 
             var highscoresPos = playPos + 2 * buttonSpacing;
 
             Action<Button> highscoresAction = (Button button) =>
             {
-                switcher.SetNextState(new HighscoreState(switcher, input, audioManager));
+                switcher.SetNextState(new HighscoreState(switcher, input, audioManager, fileManager));
             };
 
             var exitPos = playPos + 3 * buttonSpacing;

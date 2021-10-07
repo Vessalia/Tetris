@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<HighscoreData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <playerName>
+    <string>Cooper</string>
+    <string>Daniel</string>
+    <string>Holly</string>
+    <string>A Literal Rock</string>
+    <string>Nathan</string>
+  </playerName>
+  <score>
+    <int>200500</int>
+    <int>187000</int>
+    <int>113300</int>
+    <int>95100</int>
+    <int>1000</int>
+  </score>
+  <count>5</count>
+</HighscoreData>

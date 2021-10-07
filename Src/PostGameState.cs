@@ -8,24 +8,31 @@ namespace Tetris.Src
 {
     class PostGameState : GameState
     {
-        public PostGameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
-        {
+        private string playerName;
+        private int score;
 
+        public PostGameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager, int score) : base(switcher, input, audioManager, fileManager)
+        {
+            this.score = score;
+
+            playerName = null;
+
+            audioManager.PlaySong("highscores", 1);
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void HandleInput()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Update(float timeStep)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

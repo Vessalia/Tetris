@@ -34,3 +34,5 @@ C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetri
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Tetris® (2008) OST - Menu Loop.xnb
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Internet Settings.ogg
 C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Internet Settings.xnb
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Outer Wilds Original Soundtrack #03 - The Museum.ogg
+C:\Users\Nathan\source\repos\Tetris\Tetris\bin\Debug\netcoreapp3.1\Content\Outer Wilds Original Soundtrack #03 - The Museum.xnb

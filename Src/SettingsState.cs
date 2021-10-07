@@ -15,7 +15,7 @@ namespace Tetris.Src
 
         private Action<Keys> onKeyInput;
 
-        public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
+        public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
         {
             menu = new Menu();
 
@@ -123,7 +123,7 @@ namespace Tetris.Src
 
             Action<Button> menuAction = (Button button) =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager, fileManager));
             };
 
             menu.AddButton(volumeIncPos, Color.White, "+", volumeIncAction, 50);

@@ -26,6 +26,12 @@
 /processorParam:Quality=Best
 /build:Internet Settings.mp3
 
+#begin Outer Wilds Original Soundtrack #03 - The Museum.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Outer Wilds Original Soundtrack #03 - The Museum.mp3
+
 #begin ScoreFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

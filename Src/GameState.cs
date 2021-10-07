@@ -11,12 +11,14 @@ namespace Tetris.Src
         protected IGameStateSwitcher switcher;
         protected Input input;
         protected AudioManager audioManager;
+        protected FileManager fileManager;
 
-        public GameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager)
+        public GameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager)
         {
             this.switcher = switcher;
             this.input = input;
             this.audioManager = audioManager;
+            this.fileManager = fileManager;
         }
 
         public abstract void HandleInput();
