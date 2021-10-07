@@ -8,11 +8,11 @@ namespace Tetris.Src
 {
     public class FileManager
     {
-        public readonly string HighscoresFilename = "Highscores/Highscores.tetris";
+        public readonly string highscoresFilename = "Highscores/Highscores.tetris";
 
         public FileManager()
         {
-            string fullpath = Path.GetFullPath(HighscoresFilename);
+            string fullpath = Path.GetFullPath(highscoresFilename);
 
             // Check to see if the save exists
             if (!File.Exists(fullpath))
@@ -35,11 +35,11 @@ namespace Tetris.Src
                 data.playerName[4] = "Nathan";
                 data.score[4] = 1000;
 
-                SaveHighscores(data, HighscoresFilename);
+                SaveHighscores(data, highscoresFilename);
             }
         }
 
-        private static HighscoreData LoadHighscores(string filename)
+        public static HighscoreData LoadHighscores(string filename)
         {
             HighscoreData data;
 
@@ -47,11 +47,9 @@ namespace Tetris.Src
             string fullpath = Path.GetFullPath(filename);
 
             // Open the file
-            FileStream stream = File.Open(fullpath, FileMode.OpenOrCreate,
-            FileAccess.Read);
+            FileStream stream = File.Open(fullpath, FileMode.OpenOrCreate, FileAccess.Read);
             try
             {
-
                 // Read the data from the file
                 XmlSerializer serializer = new XmlSerializer(typeof(HighscoreData));
                 data = (HighscoreData)serializer.Deserialize(stream);
@@ -88,7 +86,7 @@ namespace Tetris.Src
         public void SaveHighScore(int score, string playerName)
         {
             // Create the data to save
-            HighscoreData data = LoadHighscores(HighscoresFilename);
+            HighscoreData data = LoadHighscores(highscoresFilename);
 
             int scoreIndex = -1;
             for (int i = 0; i < data.count; i++)
@@ -112,7 +110,7 @@ namespace Tetris.Src
                 data.playerName[scoreIndex] = playerName; //Retrieve User Name Here
                 data.score[scoreIndex] = score;
 
-                SaveHighscores(data, HighscoresFilename);
+                SaveHighscores(data, highscoresFilename);
             }
         }
     }

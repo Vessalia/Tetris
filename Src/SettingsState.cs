@@ -155,7 +155,7 @@ namespace Tetris.Src
         public override void Update(float timeStep) 
         {
             var keys = input.GetPressedKeys();
-            if (keys.Length > 0 && onKeyInput != null && !Constants.keyBindings.ContainsValue(keys[0]) && keys[0] != Keys.Escape)
+            if (keys.Length > 0 && onKeyInput != null && !Constants.keyBindings.ContainsValue(keys[0]) && keys[0] != Keys.Escape && keys[0] != Keys.Enter)
             {
                 onKeyInput.Invoke(keys[0]);
                 onKeyInput = null;
