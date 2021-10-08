@@ -9,6 +9,8 @@ namespace Tetris.Src
     public class AudioManager
     {
         private Dictionary<string, Song> songs;
+        
+        private string currSong;
 
         private int masterVolume = 100;
 
@@ -29,6 +31,8 @@ namespace Tetris.Src
             MediaPlayer.Volume = InternalMasterVolume() * volume;
             MediaPlayer.IsRepeating = isRepeating;
             MediaPlayer.Play(songs[song]);
+
+            currSong = song;
         }
 
         public void ResumeSong(float volume, bool isRepeating = true)
@@ -57,6 +61,11 @@ namespace Tetris.Src
         private float InternalMasterVolume()
         {
             return masterVolume / 100f;
+        }
+
+        public string GetCurrentSong()
+        {
+            return currSong;
         }
     }
 }

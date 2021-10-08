@@ -79,7 +79,7 @@ namespace Tetris.Src
 
         protected override void Draw(GameTime gameTime)
         {
-            if (gameState is PlayState || gameState is HighscoreState || gameState is HighscoreState) // bad practice
+            if (gameState is PlayState || gameState is HighscoreState || gameState is HighscoreState || gameState is PostGameState) // bad practice
             {
                 GraphicsDevice.Clear(Color.DimGray);
             }

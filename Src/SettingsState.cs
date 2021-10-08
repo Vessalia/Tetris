@@ -15,8 +15,18 @@ namespace Tetris.Src
 
         private Action<Keys> onKeyInput;
 
+        private List<Keys> forbiddenKeys;
+
         public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
         {
+            forbiddenKeys = new List<Keys> 
+            { 
+                Keys.Escape, 
+                Keys.Enter, 
+                Keys.Space,
+                Keys.Back
+            };
+
             menu = new Menu();
 
             var buttonSpacing = new Vector2(0, Constants.Screen.Y * 5 / 48);
@@ -155,7 +165,7 @@ namespace Tetris.Src
         public override void Update(float timeStep) 
         {
             var keys = input.GetPressedKeys();
-            if (keys.Length > 0 && onKeyInput != null && !Constants.keyBindings.ContainsValue(keys[0]) && keys[0] != Keys.Escape && keys[0] != Keys.Enter)
+            if (keys.Length > 0 && onKeyInput != null && !Constants.keyBindings.ContainsValue(keys[0]) && !forbiddenKeys.Contains(keys[0]))
             {
                 onKeyInput.Invoke(keys[0]);
                 onKeyInput = null;
@@ -168,10 +178,11 @@ namespace Tetris.Src
             var titleText = "Settings";
             var titleTextSize = fonts["title"].MeasureString(titleText);
 
+            sb.DrawString(fonts["title"], titleText, new Vector2(Constants.Screen.X / 2, Constants.Screen.Y / 7.2f) - titleTextSize / 2, Color.IndianRed);
+
             var volumeText = "Volume";
             var volumeTextSize = fonts["default"].MeasureString(volumeText);
 
-            sb.DrawString(fonts["title"], titleText, new Vector2(Constants.Screen.X / 2, Constants.Screen.Y / 7.2f) - titleTextSize / 2, Color.IndianRed);
             sb.DrawString(fonts["default"], volumeText, (Constants.Screen - volumeTextSize) / 2 - new Vector2(0, Constants.Screen.Y / 7.2f + volumeTextSize.Y), Color.IndianRed);
 
             var volumeLevelText = $"{audioManager.GetMasterVolume()}";

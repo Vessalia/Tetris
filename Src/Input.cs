@@ -53,5 +53,10 @@ namespace Tetris.Src
         {
             return Keyboard.GetState().GetPressedKeys();
         }
+
+        public bool IsKeyAChar(Keys key)
+        {
+            return key >= Keys.A && key <= Keys.Z;
+        }
     }
 }

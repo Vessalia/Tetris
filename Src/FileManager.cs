@@ -8,38 +8,49 @@ namespace Tetris.Src
 {
     public class FileManager
     {
-        public readonly string highscoresFilename = "Highscores/Highscores.tetris";
+        public readonly string highscoresFilename = "Highscores/Highscores.stor";
+        public readonly string keyBindingsFilename = "Settings/KeyBindings.stor";
 
         public FileManager()
         {
-            string fullpath = Path.GetFullPath(highscoresFilename);
+            string scoresFullpath = Path.GetFullPath(highscoresFilename);
 
             // Check to see if the save exists
-            if (!File.Exists(fullpath))
+            if (!File.Exists(scoresFullpath))
             {
                 //If the file doesn't exist, make a fake one...
                 // Create the data to save
-                HighscoreData data = new HighscoreData(5);
+                HighscoreData data = new HighscoreData(7);
                 data.playerName[0] = "Cooper";
-                data.score[0] = 200500;
+                data.score[0] = 960000;
 
                 data.playerName[1] = "Daniel";
-                data.score[1] = 187000;
+                data.score[1] = 55400;
 
                 data.playerName[2] = "Holly";
-                data.score[2] = 113300;
+                data.score[2] = 42500;
 
-                data.playerName[3] = "A Literal Rock";
-                data.score[3] = 95100;
+                data.playerName[3] = "Boomer";
+                data.score[3] = 40300;
 
-                data.playerName[4] = "Nathan";
-                data.score[4] = 1000;
+                data.playerName[4] = "Buzz";
+                data.score[4] = 26500;
+
+                data.playerName[5] = "Moose";
+                data.score[5] = 26460;
+
+                data.playerName[6] = "Nathan";
+                data.score[6] = -1000;
 
                 SaveHighscores(data, highscoresFilename);
             }
+
+            string keyBindingsFullpath = Path.GetFullPath(keyBindingsFilename);
+
+
         }
 
-        public static HighscoreData LoadHighscores(string filename)
+        public HighscoreData LoadHighscores(string filename)
         {
             HighscoreData data;
 
@@ -63,7 +74,7 @@ namespace Tetris.Src
             return (data);
         }
 
-        private static void SaveHighscores(HighscoreData data, string filename)
+        private void SaveHighscores(HighscoreData data, string filename)
         {
             // Get the path of the save game
             string fullpath = Path.GetFullPath(filename);
@@ -112,6 +123,11 @@ namespace Tetris.Src
 
                 SaveHighscores(data, highscoresFilename);
             }
+        }
+
+        public string GetHighscoreFilePath()
+        {
+            return highscoresFilename;
         }
     }
 }
