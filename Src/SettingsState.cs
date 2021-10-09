@@ -27,6 +27,8 @@ namespace Tetris.Src
                 Keys.Back
             };
 
+            ConfigData data = (ConfigData)fileManager.LoadData(fileManager.keyBindingsFilename, typeof(ConfigData));
+
             menu = new Menu();
 
             var buttonSpacing = new Vector2(0, Constants.Screen.Y * 5 / 48);

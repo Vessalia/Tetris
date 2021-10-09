@@ -100,7 +100,7 @@ namespace Tetris.Src
             {
                 if (key == Keys.Enter && playerName.Length > 0)
                 {
-                    fileManager.SaveHighScore(score, playerName);
+                    fileManager.SaveHighscore(score, playerName);
                     nameEntered = true;
                 }
                 else if (key == Keys.Space && playerName.Length > 0)
@@ -142,11 +142,11 @@ namespace Tetris.Src
 
         private bool CheckForNewHighscore(int score)
         {
-            HighscoreData data = fileManager.LoadHighscores(fileManager.GetHighscoreFilePath());
+            HighscoreData data = (HighscoreData)fileManager.LoadData(fileManager.highscoresFilename, typeof(HighscoreData));
 
-            foreach (var points in data.score)
+            foreach (var name in data.highscores.Keys)
             {
-                if (score > points)
+                if (score > data.highscores[name])
                 {
                     return true;
                 }

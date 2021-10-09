@@ -26,7 +26,7 @@ namespace Tetris.Src
 
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
 
-            if (audioManager.GetCurrentSong() != "highscores")
+            if (audioManager.currSong != "highscores")
             {
                 audioManager.PlaySong("highscores", 1);
             }
