@@ -7,20 +7,16 @@ namespace Tetris.Src
     [Serializable]
     public struct HighscoreData
     {
-        public Dictionary<string, int> highscores;
+        public string[] playerName;
+        public int[] score;
 
         public int count;
-
-        public HighscoreData(int i = 0)
+        public HighscoreData(int count)
         {
-            highscores = new Dictionary<string, int>();
+            playerName = new string[count];
+            score = new int[count];
 
-            count = highscores.Count;
-        }
-
-        public void AddHighscore(string name, int score)
-        {
-            highscores.Add(name, score);
+            this.count = count;
         }
     }
 }

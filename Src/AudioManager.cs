@@ -10,7 +10,7 @@ namespace Tetris.Src
     {
         private Dictionary<string, Song> songs;
         
-        public string currSong { get; private set; }
+        private string currSong;
 
         private int masterVolume = 100;
 
@@ -61,6 +61,11 @@ namespace Tetris.Src
         private float InternalMasterVolume()
         {
             return masterVolume / 100f;
+        }
+
+        public string GetCurrentSong()
+        {
+            return currSong;
         }
     }
 }
