@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ConfigData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <volume>100</volume>
+  <keyNames>
+    <string>left</string>
+    <string>right</string>
+    <string>Up</string>
+    <string>down</string>
+    <string>rotate ccw</string>
+    <string>rotate cw</string>
+    <string>hold</string>
+  </keyNames>
+  <keyBindings>
+    <Keys>Left</Keys>
+    <Keys>Right</Keys>
+    <Keys>Up</Keys>
+    <Keys>Down</Keys>
+    <Keys>Z</Keys>
+    <Keys>X</Keys>
+    <Keys>C</Keys>
+  </keyBindings>
+</ConfigData>

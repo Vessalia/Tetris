@@ -12,7 +12,7 @@ namespace Tetris.Src
         
         private string currSong;
 
-        private int masterVolume = 100;
+        private int masterVolume;
 
         public AudioManager(ContentManager Content)
         {
@@ -23,6 +23,10 @@ namespace Tetris.Src
                 ["settings"] = Content.Load<Song>("Internet Settings"),
                 ["highscores"] = Content.Load<Song>("Outer Wilds Original Soundtrack #03 - The Museum")
             };
+
+            FileManager<ConfigData> fileManager = new FileManager<ConfigData>(Constants.configPath);
+
+            masterVolume = fileManager.LoadData().volume;
         }
 
         public void PlaySong(string song, float volume, bool isRepeating = true)

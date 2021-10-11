@@ -17,7 +17,7 @@ namespace Tetris.Src
 
         private List<Keys> forbiddenKeys;
 
-        public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
+        public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             forbiddenKeys = new List<Keys> 
             { 
@@ -133,7 +133,7 @@ namespace Tetris.Src
 
             Action<Button> menuAction = (Button button) =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, audioManager, fileManager));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
             };
 
             menu.AddButton(volumeIncPos, Color.White, "+", volumeIncAction, 50);

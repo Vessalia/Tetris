@@ -11,6 +11,9 @@ namespace Tetris.Src
         private static readonly int Width = 1280;
         private static readonly int Height = 720;
 
+        public static readonly string highscorePath = "Highscores/Highscores.gold";
+        public static readonly string configPath = "Config/Settings.gold";
+
         public static Dictionary<string, Keys> keyBindings = new Dictionary<string, Keys> 
         {
             ["left"] = Keys.Left,

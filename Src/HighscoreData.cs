@@ -5,18 +5,45 @@ using System.Text;
 namespace Tetris.Src
 {
     [Serializable]
-    public struct HighscoreData
+    public class HighscoreData
     {
-        public string[] playerName;
-        public int[] score;
-
-        public int count;
-        public HighscoreData(int count)
+        public List<string> names { get; set; }
+        public List<int> scores { get; set; }
+        public int minScore { get; set; }
+        public int Count
         {
-            playerName = new string[count];
-            score = new int[count];
+            get { return names.Count; }
+        }
 
-            this.count = count;
+        public HighscoreData()
+        {
+            names = new List<string>();
+            scores = new List<int>();
+        }
+
+        public void SortData()
+        {
+            minScore = int.MaxValue;
+            for (int i = 1; i < scores.Count; i++)
+            {
+                if (scores[i - 1] > scores[i])
+                {
+                    for (int j = i; j > 0; j--)
+                    {
+                        int tempScore = scores[j];
+                        scores[j] = scores[j - 1];
+                        scores[j - 1] = tempScore;
+
+                        string tempName = names[j];
+                        names[j] = names[j - 1];
+                        names[j - 1] = tempName;
+                    }
+                }
+                if (scores[0] < minScore)
+                {
+                    minScore = scores[0];
+                }
+            }
         }
     }
 }
