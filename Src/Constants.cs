@@ -14,18 +14,6 @@ namespace Tetris.Src
         public static readonly string highscorePath = "Highscores/Highscores.gold";
         public static readonly string configPath = "Config/Settings.gold";
 
-        public static Dictionary<string, Keys> keyBindings = new Dictionary<string, Keys> 
-        {
-            ["left"] = Keys.Left,
-            ["right"] = Keys.Right,
-            ["up"] = Keys.Up,
-            ["down"] = Keys.Down,
-
-            ["rotate cw"] = Keys.X,
-            ["rotate ccw"] = Keys.Z,
-            ["hold"] = Keys.C
-        };
-
         public static readonly Vector2 Screen = new Vector2(Width, Height);
 
         public static Vector2 GridToScreenCoords(Location gridIndicies, Location cellMN) /* Method needs to be updated for an m =/= n grid */
@@ -50,18 +38,6 @@ namespace Tetris.Src
             gridPos.Y = (Constants.Screen.Y - cellMN.y * cellLen) / 2 + gridIndicies.y * cellLen;
 
             return gridPos;
-        }
-
-        public static void SetKeyBindings(string name, Keys key)
-        {
-            if (keyBindings.ContainsKey(name))
-            {
-                keyBindings[name] = key;
-            }
-            else
-            {
-                keyBindings.Add(name, key);
-            }
         }
     }
 }

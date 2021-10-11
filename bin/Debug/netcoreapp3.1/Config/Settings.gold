@@ -4,19 +4,19 @@
   <keyNames>
     <string>left</string>
     <string>right</string>
-    <string>Up</string>
+    <string>up</string>
     <string>down</string>
     <string>rotate ccw</string>
     <string>rotate cw</string>
     <string>hold</string>
   </keyNames>
   <keyBindings>
-    <Keys>Left</Keys>
-    <Keys>Right</Keys>
-    <Keys>Up</Keys>
-    <Keys>Down</Keys>
-    <Keys>Z</Keys>
-    <Keys>X</Keys>
-    <Keys>C</Keys>
+    <Keys>A</Keys>
+    <Keys>D</Keys>
+    <Keys>W</Keys>
+    <Keys>S</Keys>
+    <Keys>Q</Keys>
+    <Keys>E</Keys>
+    <Keys>F</Keys>
   </keyBindings>
 </ConfigData>

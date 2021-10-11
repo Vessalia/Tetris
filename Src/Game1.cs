@@ -72,6 +72,8 @@ namespace Tetris.Src
                 return;
             }
 
+            audioManager.Update();
+
             gameState.Update(dt);
 
             base.Update(gameTime);
@@ -148,7 +150,7 @@ namespace Tetris.Src
                 confData.keyNames.Add("right");
                 confData.keyBindings.Add(Keys.Right);
 
-                confData.keyNames.Add("Up");
+                confData.keyNames.Add("up");
                 confData.keyBindings.Add(Keys.Up);
 
                 confData.keyNames.Add("down");

@@ -6,7 +6,7 @@ namespace Tetris.Src
 {
     public class HighscoreManager
     {
-        public HighscoreData data;
+        public HighscoreData data { get; private set; }
         public HighscoreManager(HighscoreData data)
         {
             this.data = data;
@@ -26,7 +26,8 @@ namespace Tetris.Src
             data.scores.Add(score);
             data.SortData();
 
-            new FileManager<HighscoreData>(Constants.highscorePath).SaveData(data);
+            FileManager<HighscoreData> fileManager = new FileManager<HighscoreData>(Constants.highscorePath);
+            fileManager.SaveData(data);
         }
     }
 }

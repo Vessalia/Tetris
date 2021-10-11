@@ -12,7 +12,9 @@ namespace Tetris.Src
         
         private string currSong;
 
-        private int masterVolume;
+        public int masterVolume { get; private set; }
+
+        private FileManager<ConfigData> fileManager;
 
         public AudioManager(ContentManager Content)
         {
@@ -24,9 +26,16 @@ namespace Tetris.Src
                 ["highscores"] = Content.Load<Song>("Outer Wilds Original Soundtrack #03 - The Museum")
             };
 
-            FileManager<ConfigData> fileManager = new FileManager<ConfigData>(Constants.configPath);
+            fileManager = new FileManager<ConfigData>(Constants.configPath);
 
             masterVolume = fileManager.LoadData().volume;
+        }
+
+        public void Update()
+        {
+            ConfigData data = fileManager.LoadData();
+            ConfigManager configManager = new ConfigManager(data);
+            configManager.SetVolume(masterVolume);
         }
 
         public void PlaySong(string song, float volume, bool isRepeating = true)
@@ -55,11 +64,6 @@ namespace Tetris.Src
             int newVolume = masterVolume + increment;
             masterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
             MediaPlayer.Volume = InternalMasterVolume();
-        }
-
-        public int GetMasterVolume()
-        {
-            return masterVolume;
         }
 
         private float InternalMasterVolume()

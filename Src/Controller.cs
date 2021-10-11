@@ -11,18 +11,34 @@ namespace Tetris.Src
 
         private Block activeBlock;
 
+        private FileManager<ConfigData> fileManager;
+
+        private ConfigManager configManager;
+
+        private ConfigData data;
+
         public Controller(IInput input)
         {
+            fileManager = new FileManager<ConfigData>(Constants.configPath);
+            data = fileManager.LoadData();
+
             this.input = input;
+        }
+
+        public void Update()
+        {
+            data = fileManager.LoadData();
         }
 
         public void HandleInput(Grid grid, bool blockRefresh)
         {
-            if (input.IsKeyJustPressed(Constants.keyBindings["rotate cw"])) { activeBlock.ClampedRotateClockwise(grid); }
-            if (input.IsKeyJustPressed(Constants.keyBindings["rotate ccw"])) { activeBlock.ClampedRotateCounterClockwise(grid); }
-            if (input.IsKeyJustPressed(Constants.keyBindings["left"])) { activeBlock.HorizontalTranslation(grid, -1); }
-            if (input.IsKeyJustPressed(Constants.keyBindings["right"])) { activeBlock.HorizontalTranslation(grid, 1); }
-            if (input.IsKeyDown(Constants.keyBindings["down"]) && blockRefresh) { activeBlock.VerticalTranslation(1/2); }
+            configManager = new ConfigManager(data);
+
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("rotate cw"))) { activeBlock.ClampedRotateClockwise(grid); }
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("rotate ccw"))) { activeBlock.ClampedRotateCounterClockwise(grid); }
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("left"))) { activeBlock.HorizontalTranslation(grid, -1); }
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("right"))) { activeBlock.HorizontalTranslation(grid, 1); }
+            if (input.IsKeyDown(configManager.GetKeyBinding("down")) && blockRefresh) { activeBlock.VerticalTranslation(1/2); }
         }
 
         public void SetActiveBlock(Block block)

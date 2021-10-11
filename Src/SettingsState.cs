@@ -17,6 +17,10 @@ namespace Tetris.Src
 
         private List<Keys> forbiddenKeys;
 
+        private FileManager<ConfigData> fileManager;
+        private ConfigManager configManager;
+        private ConfigData data;
+
         public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             forbiddenKeys = new List<Keys> 
@@ -26,6 +30,10 @@ namespace Tetris.Src
                 Keys.Space,
                 Keys.Back
             };
+
+            fileManager = new FileManager<ConfigData>(Constants.configPath);
+            data = fileManager.LoadData();
+            configManager = new ConfigManager(data);
 
             menu = new Menu();
 
@@ -52,8 +60,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["rotate ccw"] = key;
-                    button.SetText("Rotate CCW: " + $"{ Constants.keyBindings["rotate ccw"]}");
+                    configManager.SaveKeyBinding("rotate ccw", key);
+                    button.SetText("Rotate CCW: " + $"{ key }");
                 };
             };
 
@@ -64,8 +72,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["rotate cw"] = key;
-                    button.SetText("Rotate CW: " + $"{ Constants.keyBindings["rotate cw"]}");
+                    configManager.SaveKeyBinding("rotate cw", key);
+                    button.SetText("Rotate CW: " + $"{ key }");
                 };
             };
 
@@ -76,8 +84,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["hold"] = key;
-                    button.SetText("Hold: " + $"{ Constants.keyBindings["hold"]}");
+                    configManager.SaveKeyBinding("hold", key);
+                    button.SetText("Hold: " + $"{ key }");
                 };
             };
 
@@ -88,8 +96,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["left"] = key;
-                    button.SetText("Move Left: " + $"{ Constants.keyBindings["left"]}");
+                    configManager.SaveKeyBinding("left", key);
+                    button.SetText("Move Left: " + $"{ key }");
                 };
             };
 
@@ -100,8 +108,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["right"] = key;
-                    button.SetText("Move Right: " + $"{ Constants.keyBindings["right"]}");
+                    configManager.SaveKeyBinding("right", key);
+                    button.SetText("Move Right: " + $"{ key }");
                 };
             };
 
@@ -112,8 +120,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["down"] = key;
-                    button.SetText("Move Down: " + $"{ Constants.keyBindings["down"]}");
+                    configManager.SaveKeyBinding("down", key);
+                    button.SetText("Move Down: " + $"{ key }");
                 };
             };
 
@@ -124,8 +132,8 @@ namespace Tetris.Src
                 button.SetText("Bind an Unused Key");
                 onKeyInput = (Keys key) =>
                 {
-                    Constants.keyBindings["up"] = key;
-                    button.SetText("Move Up: " + $"{ Constants.keyBindings["up"]}");
+                    configManager.SaveKeyBinding("up", key);
+                    button.SetText("Move Up: " + $"{ key }");
                 };
             };
 
@@ -138,13 +146,13 @@ namespace Tetris.Src
 
             menu.AddButton(volumeIncPos, Color.White, "+", volumeIncAction, 50);
             menu.AddButton(volumeDecPos, Color.White, "-", volumeDecAction, 50);
-            menu.AddButton(ccwKeyPos, Color.White, "Rotate CCW: " + $"{Constants.keyBindings["rotate ccw"]}", ccwKeyAction);
-            menu.AddButton(cwKeyPos, Color.White, "Rotate CW: " + $"{Constants.keyBindings["rotate cw"]}", cwKeyAction);
-            menu.AddButton(holdKeyPos, Color.White, "Hold: " + $"{Constants.keyBindings["hold"]}", holdKeyAction);
-            menu.AddButton(leftKeyPos, Color.White, "Move Left: " + $"{Constants.keyBindings["left"]}", leftKeyAction);
-            menu.AddButton(rightKeyPos, Color.White, "Move Right: " + $"{Constants.keyBindings["right"]}", rightKeyAction);
-            menu.AddButton(downKeyPos, Color.White, "Move Down: " + $"{Constants.keyBindings["down"]}", downKeyAction);
-            menu.AddButton(upKeyPos, Color.White, "Move Up: " + $"{Constants.keyBindings["up"]}", upKeyAction);
+            menu.AddButton(ccwKeyPos, Color.White, "Rotate CCW: " + $"{configManager.GetKeyBinding("rotate ccw")}", ccwKeyAction);
+            menu.AddButton(cwKeyPos, Color.White, "Rotate CW: " + $"{configManager.GetKeyBinding("rotate cw")}", cwKeyAction);
+            menu.AddButton(holdKeyPos, Color.White, "Hold: " + $"{configManager.GetKeyBinding("hold")}", holdKeyAction);
+            menu.AddButton(leftKeyPos, Color.White, "Move Left: " + $"{configManager.GetKeyBinding("left")}", leftKeyAction);
+            menu.AddButton(rightKeyPos, Color.White, "Move Right: " + $"{configManager.GetKeyBinding("right")}", rightKeyAction);
+            menu.AddButton(downKeyPos, Color.White, "Move Down: " + $"{configManager.GetKeyBinding("down")}", downKeyAction);
+            menu.AddButton(upKeyPos, Color.White, "Move Up: " + $"{configManager.GetKeyBinding("up")}", upKeyAction);
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
 
             audioManager.PlaySong("settings", 0.75f);
@@ -165,7 +173,7 @@ namespace Tetris.Src
         public override void Update(float timeStep) 
         {
             var keys = input.GetPressedKeys();
-            if (keys.Length > 0 && onKeyInput != null && !Constants.keyBindings.ContainsValue(keys[0]) && !forbiddenKeys.Contains(keys[0]))
+            if (keys.Length > 0 && onKeyInput != null && !data.keyBindings.Contains(keys[0]) && !forbiddenKeys.Contains(keys[0]))
             {
                 onKeyInput.Invoke(keys[0]);
                 onKeyInput = null;
@@ -185,7 +193,7 @@ namespace Tetris.Src
 
             sb.DrawString(fonts["default"], volumeText, (Constants.Screen - volumeTextSize) / 2 - new Vector2(0, Constants.Screen.Y / 7.2f + volumeTextSize.Y), Color.IndianRed);
 
-            var volumeLevelText = $"{audioManager.GetMasterVolume()}";
+            var volumeLevelText = $"{audioManager.masterVolume}";
             var volumeLevelTextSize = fonts["default"].MeasureString(volumeLevelText);
 
             var volumeWidth = 120;

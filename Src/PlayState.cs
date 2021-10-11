@@ -32,8 +32,15 @@ namespace Tetris.Src
         private int score;
         private int level;
 
+        private ConfigManager configManager;
+        private ConfigData data;
+
         public PlayState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
+            FileManager<ConfigData> fileManager = new FileManager<ConfigData>(Constants.configPath);
+            data = fileManager.LoadData();
+            configManager = new ConfigManager(data);
+
             randInt = new Random();
 
             grid = new Grid(new Location(10, 20));
@@ -72,7 +79,7 @@ namespace Tetris.Src
         public override void HandleInput()
         {
             controller.HandleInput(grid, blockRefresh);
-            if (input.IsKeyJustPressed(Keys.C) && !heldBlockCooldown)
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("hold")) && !heldBlockCooldown)
             {
                 if (heldBlock != null)
                 {
@@ -116,7 +123,7 @@ namespace Tetris.Src
 
             if (!blockRefresh)
             {
-                if (input.IsKeyJustReleased(Keys.Down) || input.IsKeyJustReleased(Keys.C))
+                if (input.IsKeyJustReleased(configManager.GetKeyBinding("down")) || input.IsKeyJustReleased(configManager.GetKeyBinding("hold")))
                 {
                     blockRefresh = true;
                 }
@@ -159,7 +166,7 @@ namespace Tetris.Src
 
                     ghostBlock = new GhostBlock(activeBlock, grid);
 
-                    if (input.IsKeyDown(Keys.Down))
+                    if (input.IsKeyDown(configManager.GetKeyBinding("down")))
                     {
                         blockRefresh = false;
                     }
