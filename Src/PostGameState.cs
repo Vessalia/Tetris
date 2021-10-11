@@ -20,11 +20,15 @@ namespace Tetris.Src
 
         private Keys prevKey;
 
-        public PostGameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager, int score) : base(switcher, input, audioManager, fileManager)
+        private FileManager<HighscoreData> fileManager;
+
+        public PostGameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, int score) : base(switcher, input, audioManager)
         {
             this.score = score;
 
             audioManager.PlaySong("highscores", 1);
+
+            fileManager = new FileManager<HighscoreData>(Constants.highscorePath);
         }
 
         public override void DrawToScreen(SpriteBatch sb, Dictionary<string, SpriteFont> fonts)
@@ -42,7 +46,7 @@ namespace Tetris.Src
             }
             else
             {
-                switcher.SetNextState(new HighscoreState(switcher, input, audioManager, fileManager));
+                switcher.SetNextState(new HighscoreState(switcher, input, audioManager));
             }
         }
 
@@ -100,7 +104,8 @@ namespace Tetris.Src
             {
                 if (key == Keys.Enter && playerName.Length > 0)
                 {
-                    fileManager.SaveHighScore(score, playerName);
+                    new HighscoreManager(fileManager.LoadData()).AddHighscore(playerName, score);
+
                     nameEntered = true;
                 }
                 else if (key == Keys.Space && playerName.Length > 0)
@@ -142,14 +147,11 @@ namespace Tetris.Src
 
         private bool CheckForNewHighscore(int score)
         {
-            HighscoreData data = fileManager.LoadHighscores(fileManager.GetHighscoreFilePath());
+            HighscoreData data = fileManager.LoadData();
 
-            foreach (var points in data.score)
+            if(score > data.minScore)
             {
-                if (score > points)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;

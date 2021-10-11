@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Tetris.Src
@@ -16,7 +17,6 @@ namespace Tetris.Src
         private Dictionary<string, SpriteFont> fonts;
 
         private AudioManager audioManager;
-        private FileManager fileManager;
 
         private GameState gameState;
 
@@ -35,13 +35,13 @@ namespace Tetris.Src
             _graphics.PreferredBackBufferHeight = (int)Constants.Screen.Y;
             _graphics.ApplyChanges();
 
+            InitializeFiles();
+
             input = new Input();
 
             audioManager = new AudioManager(Content);
 
-            fileManager = new FileManager();
-
-            gameState = new MainMenuState(this, input, audioManager, fileManager);
+            gameState = new MainMenuState(this, input, audioManager);
 
             base.Initialize();
         }
@@ -100,6 +100,73 @@ namespace Tetris.Src
         public void SetNextState(GameState gameState)
         {
             this.gameState = gameState;
+        }
+
+        public void InitializeFiles()
+        {
+            if (!File.Exists(Path.GetFullPath(Constants.highscorePath)))
+            {
+                HighscoreData data = new HighscoreData();
+
+                data.names.Add("Cooper");
+                data.scores.Add(960000);
+
+                data.names.Add("Daniel");
+                data.scores.Add(55400);
+
+                data.names.Add("Holly");
+                data.scores.Add(42500);
+
+                data.names.Add("Boomer");
+                data.scores.Add(40300);
+
+                data.names.Add("Buzz");
+                data.scores.Add(26500);
+
+                data.names.Add("Moose");
+                data.scores.Add(26460);
+
+                data.names.Add("Nathan");
+                data.scores.Add(-1000);
+
+                data.SortData();
+
+                string highscoreFullPath = Path.GetFullPath(Constants.highscorePath);
+                FileManager<HighscoreData> fileManager = new FileManager<HighscoreData>(highscoreFullPath);
+                fileManager.SaveData(data);
+            }
+
+            if (!File.Exists(Path.GetFullPath(Constants.configPath)))
+            {
+                ConfigData confData = new ConfigData();
+
+                confData.volume = 100;
+
+                confData.keyNames.Add("left");
+                confData.keyBindings.Add(Keys.Left);
+
+                confData.keyNames.Add("right");
+                confData.keyBindings.Add(Keys.Right);
+
+                confData.keyNames.Add("Up");
+                confData.keyBindings.Add(Keys.Up);
+
+                confData.keyNames.Add("down");
+                confData.keyBindings.Add(Keys.Down);
+
+                confData.keyNames.Add("rotate ccw");
+                confData.keyBindings.Add(Keys.Z);
+
+                confData.keyNames.Add("rotate cw");
+                confData.keyBindings.Add(Keys.X);
+
+                confData.keyNames.Add("hold");
+                confData.keyBindings.Add(Keys.C);
+
+                string configFullPath = Path.GetFullPath(Constants.configPath);
+                FileManager<ConfigData> confFileManager = new FileManager<ConfigData>(configFullPath);
+                confFileManager.SaveData(confData);
+            }
         }
     }
 }

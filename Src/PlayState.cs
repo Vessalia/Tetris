@@ -32,7 +32,7 @@ namespace Tetris.Src
         private int score;
         private int level;
 
-        public PlayState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
+        public PlayState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             randInt = new Random();
 
@@ -96,14 +96,14 @@ namespace Tetris.Src
                 }
                 else
                 {
-                    switcher.SetNextState(new PostGameState(switcher, input, audioManager, fileManager, score));
+                    switcher.SetNextState(new PostGameState(switcher, input, audioManager, score));
                 }
                 return;
             }
 
             if (input.IsKeyJustPressed(Keys.Escape))
             {
-                switcher.SetNextState(new PauseState(switcher, input, this, audioManager, fileManager));
+                switcher.SetNextState(new PauseState(switcher, input, this, audioManager));
             }
 
             activeBlock.LevelSpeedUp(level);

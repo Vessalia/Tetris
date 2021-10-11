@@ -13,7 +13,7 @@ namespace Tetris.Src
 
         private Menu menu;
 
-        public HighscoreState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, FileManager fileManager) : base(switcher, input, audioManager, fileManager)
+        public HighscoreState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
             menu = new Menu();
 
@@ -21,7 +21,7 @@ namespace Tetris.Src
 
             Action<Button> menuAction = (Button button) =>
             {
-                switcher.SetNextState(new MainMenuState(switcher, input, audioManager, fileManager));
+                switcher.SetNextState(new MainMenuState(switcher, input, audioManager));
             };
 
             menu.AddButton(menuPos, Color.White, "Menu", menuAction);
