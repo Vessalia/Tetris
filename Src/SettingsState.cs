@@ -17,7 +17,6 @@ namespace Tetris.Src
 
         private List<Keys> forbiddenKeys;
 
-        private FileManager<ConfigData> fileManager;
         private ConfigManager configManager;
         private ConfigData data;
 
@@ -31,7 +30,7 @@ namespace Tetris.Src
                 Keys.Back
             };
 
-            fileManager = new FileManager<ConfigData>(Constants.configPath);
+            var fileManager = new FileManager<ConfigData>(Constants.configPath);
             data = fileManager.LoadData();
             configManager = new ConfigManager(data);
 

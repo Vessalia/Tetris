@@ -26,7 +26,7 @@ namespace Tetris.Src
             minScore = int.MaxValue;
             for (int i = 1; i < scores.Count; i++)
             {
-                if (scores[i - 1] > scores[i])
+                if (scores[i - 1] < scores[i])
                 {
                     for (int j = i; j > 0; j--)
                     {
@@ -39,9 +39,9 @@ namespace Tetris.Src
                         names[j - 1] = tempName;
                     }
                 }
-                if (scores[0] < minScore)
+                if (scores[scores.Count - 1] < minScore)
                 {
-                    minScore = scores[0];
+                    minScore = scores[scores.Count - 1];
                 }
             }
         }

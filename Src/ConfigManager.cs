@@ -41,12 +41,12 @@ namespace Tetris.Src
                 }
             }
 
-            throw new Exception();
+            throw new Exception("key binding does not exist, check to see if it has been initialized");
         }
 
         public void SetVolume(int volume)
         {
-           data.volume = volume;
+            data.volume = volume;
 
             fileManager.SaveData(data);
         }

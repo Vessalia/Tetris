@@ -31,12 +31,7 @@ namespace Tetris.Src
             masterVolume = fileManager.LoadData().volume;
         }
 
-        public void Update()
-        {
-            ConfigData data = fileManager.LoadData();
-            ConfigManager configManager = new ConfigManager(data);
-            configManager.SetVolume(masterVolume);
-        }
+        public void Update() { }
 
         public void PlaySong(string song, float volume, bool isRepeating = true)
         {
@@ -64,6 +59,10 @@ namespace Tetris.Src
             int newVolume = masterVolume + increment;
             masterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
             MediaPlayer.Volume = InternalMasterVolume();
+
+            ConfigData data = fileManager.LoadData();
+            ConfigManager configManager = new ConfigManager(data);
+            configManager.SetVolume(masterVolume);
         }
 
         private float InternalMasterVolume()

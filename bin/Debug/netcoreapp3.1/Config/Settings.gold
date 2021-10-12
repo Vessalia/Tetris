@@ -11,12 +11,12 @@
     <string>hold</string>
   </keyNames>
   <keyBindings>
-    <Keys>A</Keys>
-    <Keys>D</Keys>
-    <Keys>W</Keys>
-    <Keys>S</Keys>
-    <Keys>Q</Keys>
-    <Keys>E</Keys>
-    <Keys>F</Keys>
+    <Keys>Left</Keys>
+    <Keys>Right</Keys>
+    <Keys>Up</Keys>
+    <Keys>Down</Keys>
+    <Keys>Z</Keys>
+    <Keys>X</Keys>
+    <Keys>C</Keys>
   </keyBindings>
 </ConfigData>
