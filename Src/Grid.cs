@@ -188,9 +188,9 @@ namespace Tetris.Src
                 }
 
                 timer = 0;
-                clearing = false;
+                Clearing = false;
 
-                score += ScoreGained(lines);
+                Score += ScoreGained(lines);
                 level += lines.Count;
             }
             else
@@ -206,7 +206,7 @@ namespace Tetris.Src
                     }
                 }
 
-                clearing = true;
+                Clearing = true;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Tetris.Src
 
         public void PlaceBlock(Block block)
         {
-            var shape = block.Shape;
+            var shape = block.GetShape();
 
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {

@@ -9,6 +9,7 @@ namespace Tetris.Src
     {
         public List<string> Names { get; set; }
         public List<int> Scores { get; set; }
+        public int MinScore { get; set; }
         public int Count
         {
             get { return Names.Count; }
@@ -22,7 +23,7 @@ namespace Tetris.Src
 
         public void SortData()
         {
-            var minScore = int.MaxValue;
+            MinScore = int.MaxValue;
             for (int i = 1; i < Scores.Count; i++)
             {
                 if (Scores[i - 1] < Scores[i])
@@ -38,9 +39,9 @@ namespace Tetris.Src
                         Names[j - 1] = tempName;
                     }
                 }
-                if (Scores[^1] < minScore)
+                if (Scores[^1] < MinScore)
                 {
-                    minScore = Scores[^1];
+                    MinScore = Scores[^1];
                 }
             }
         }

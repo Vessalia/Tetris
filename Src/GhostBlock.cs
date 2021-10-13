@@ -21,14 +21,14 @@ namespace Tetris.Src
             this.block = block;
             this.grid = grid;
 
-            Shape = block.Shape;
+            Shape = block.GetShape();
 
             pos = new Location(block.GetPos().x, 0);
         }
 
         public void Update()
         {
-            Shape = block.Shape;
+            Shape = block.GetShape();
             pos.x = block.GetPos().x;
             pos.y = GetPosY();
         }
@@ -41,7 +41,7 @@ namespace Tetris.Src
                 {
                     if (Shape[j, i])
                     {
-                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.cellMN);
+                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.CellMN);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.LightBlue, 10);
                     }
                 }

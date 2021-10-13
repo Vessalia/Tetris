@@ -11,7 +11,7 @@ namespace Tetris.Src
 
         private Block activeBlock;
 
-        private FileManager<ConfigData> fileManager;
+        private readonly FileManager<ConfigData> fileManager;
 
         private ConfigManager configManager;
 
@@ -36,8 +36,8 @@ namespace Tetris.Src
 
             if (input.IsKeyJustPressed(configManager.GetKeyBinding("rotate cw"))) { activeBlock.ClampedRotateClockwise(grid); }
             if (input.IsKeyJustPressed(configManager.GetKeyBinding("rotate ccw"))) { activeBlock.ClampedRotateCounterClockwise(grid); }
-            if (input.IsKeyJustPressed(configManager.GetKeyBinding("left"))) { activeBlock.HorizontalTranslation(grid, -1); }
-            if (input.IsKeyJustPressed(configManager.GetKeyBinding("right"))) { activeBlock.HorizontalTranslation(grid, 1); }
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("left"))) { activeBlock.HorizontalTranslation(-1); }
+            if (input.IsKeyJustPressed(configManager.GetKeyBinding("right"))) { activeBlock.HorizontalTranslation(1); }
             if (input.IsKeyDown(configManager.GetKeyBinding("down")) && blockRefresh) { activeBlock.VerticalTranslation(1/2); }
         }
 

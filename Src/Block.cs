@@ -17,7 +17,7 @@ namespace Tetris.Src
 
         public Color Colour { get; private set; }
 
-        public bool[,] Shape { get; private set; }
+        private bool[,] shape;
         private readonly bool[,] initialShape;
 
         private int xSpeed;
@@ -44,11 +44,11 @@ namespace Tetris.Src
             this.pos = pos;
             this.grid = grid;
             this.input = input;
+            this.shape = shape;
 
             initialPos = pos;
-            initialShape = Shape;
+            initialShape = shape;
             Colour = colour;
-            Shape = shape;
 
             isLive = true;
             IsGameOver = false;
@@ -69,13 +69,13 @@ namespace Tetris.Src
 
         public void Draw(SpriteBatch sb, int xOffset = 0, int yOffset = 0)
         {
-            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (Shape[j, i])
+                    if (shape[j, i])
                     {
-                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i + xOffset, pos.y + j + yOffset), grid.cellMN);
+                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i + xOffset, pos.y + j + yOffset), grid.CellMN);
                         sb.FillRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Colour);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.Black);
                     }
@@ -107,7 +107,7 @@ namespace Tetris.Src
                 pos.y -= 1;
                 startPlacing = true;
 
-                if(pos.y + Shape.GetUpperBound(1) + 1 < 0)
+                if(pos.y + shape.GetUpperBound(1) + 1 < 0)
                 {
                     pos.y = 0;
                     IsGameOver = true;
@@ -130,11 +130,11 @@ namespace Tetris.Src
 
         private bool CollisionCheck()
         {
-            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (Shape[j, i])
+                    if (shape[j, i])
                     {
                         if(!grid.InBounds(new Location(pos.x + i, pos.y + j)))
                         {
@@ -149,11 +149,11 @@ namespace Tetris.Src
 
         private bool BlockCollisionCheck()
         {
-            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (Shape[j, i])
+                    if (shape[j, i])
                     {
                         Location cellPos = new Location(pos.x + i, pos.y + j);
 
@@ -170,7 +170,7 @@ namespace Tetris.Src
 
         public void ClampedRotateClockwise(Grid grid)
         {
-            Shape = RotateArrayClockwise(Shape);
+            shape = RotateArrayClockwise(shape);
 
             while (CollisionCheck())
             {
@@ -178,20 +178,20 @@ namespace Tetris.Src
                 {
                     pos.x += 1;
                 }
-                else if (pos.x >= grid.cellMN.x - (Shape.GetUpperBound(0) + 1))
+                else if (pos.x >= grid.CellMN.x - (shape.GetUpperBound(0) + 1))
                 {
                     pos.x -= 1;
                 }
                 else
                 {
-                    Shape = RotateArrayCounterClockwise(Shape);
+                    shape = RotateArrayCounterClockwise(shape);
                 }
             }
         }
 
         public void ClampedRotateCounterClockwise(Grid grid)
         {
-            Shape = RotateArrayCounterClockwise(Shape);
+            shape = RotateArrayCounterClockwise(shape);
 
             while (CollisionCheck())
             {
@@ -199,13 +199,13 @@ namespace Tetris.Src
                 {
                     pos.x += 1;
                 }
-                else if (pos.x >= grid.cellMN.x - (Shape.GetUpperBound(0) + 1))
+                else if (pos.x >= grid.CellMN.x - (shape.GetUpperBound(0) + 1))
                 {
                     pos.x -= 1;
                 }
                 else
                 {
-                    Shape = RotateArrayClockwise(Shape);
+                    shape = RotateArrayClockwise(shape);
                 }
             }
         }
@@ -337,7 +337,12 @@ namespace Tetris.Src
 
         public Location GetShapeMN()
         {
-            return new Location(Shape.GetUpperBound(0) + 1, Shape.GetUpperBound(1) + 1);
+            return new Location(shape.GetUpperBound(0) + 1, shape.GetUpperBound(1) + 1);
+        }
+
+        public bool[,] GetShape()
+        {
+            return shape;
         }
 
         public void ResetPos()
@@ -347,7 +352,7 @@ namespace Tetris.Src
 
         public void ResetShape()
         {
-            Shape = initialShape;
+            shape = initialShape;
         }
 
         public Location GetPos()

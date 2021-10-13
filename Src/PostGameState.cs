@@ -12,7 +12,7 @@ namespace Tetris.Src
     {
         private string playerName = "";
 
-        private int score;
+        private readonly int score;
         private float timer = 0;
 
         private bool nameEntered = false;
@@ -20,7 +20,7 @@ namespace Tetris.Src
 
         private Keys prevKey;
 
-        private FileManager<HighscoreData> fileManager;
+        private readonly FileManager<HighscoreData> fileManager;
 
         public PostGameState(IGameStateSwitcher switcher, Input input, AudioManager audioManager, int score) : base(switcher, input, audioManager)
         {
@@ -62,7 +62,7 @@ namespace Tetris.Src
         public override void Update(float timeStep)
         {
             var keys = input.GetPressedKeys();
-            bool incrementTimer = false;
+            bool incrementTimer;
             if (keys.Length > 0)
             {
                 if (keys[0] == prevKey)
@@ -149,7 +149,7 @@ namespace Tetris.Src
         {
             HighscoreData data = fileManager.LoadData();
 
-            if(score > data.minScore)
+            if(score > data.MinScore)
             {
                 return true;
             }

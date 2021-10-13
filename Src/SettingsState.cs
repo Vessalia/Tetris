@@ -15,10 +15,10 @@ namespace Tetris.Src
 
         private Action<Keys> onKeyInput;
 
-        private List<Keys> forbiddenKeys;
+        private readonly List<Keys> forbiddenKeys;
 
-        private ConfigManager configManager;
-        private ConfigData data;
+        private readonly ConfigManager configManager;
+        private readonly ConfigData data;
 
         public SettingsState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
@@ -192,7 +192,7 @@ namespace Tetris.Src
 
             sb.DrawString(fonts["default"], volumeText, (Constants.Screen - volumeTextSize) / 2 - new Vector2(0, Constants.Screen.Y / 7.2f + volumeTextSize.Y), Color.IndianRed);
 
-            var volumeLevelText = $"{audioManager.masterVolume}";
+            var volumeLevelText = $"{audioManager.MasterVolume}";
             var volumeLevelTextSize = fonts["default"].MeasureString(volumeLevelText);
 
             var volumeWidth = 120;

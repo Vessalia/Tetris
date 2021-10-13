@@ -62,7 +62,7 @@ namespace Tetris.Src
                 var scoreText = $"{data.Names[i]}" + ": " + $"{data.Scores[i]}";
                 var scoreTextSize = fonts["default"].MeasureString(scoreText);
 
-                if (i % 4 == 0 && i != 0)
+                if (i % 5 == 0 && i != 0)
                 {
                     posX += Constants.Screen.X / 2;
                     posY = Constants.Screen.Y / 5;

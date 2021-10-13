@@ -131,6 +131,12 @@ namespace Tetris.Src
                 data.Names.Add("Christopher");
                 data.Scores.Add(25040);
 
+                data.Names.Add("Otis");
+                data.Scores.Add(19680);
+
+                data.Names.Add("Oscar");
+                data.Scores.Add(19640);
+
                 data.Names.Add("Nathan");
                 data.Scores.Add(-1000);
 

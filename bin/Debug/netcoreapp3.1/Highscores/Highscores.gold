@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <HighscoreData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <names>
+  <Names>
     <string>Cooper</string>
     <string>Daniel</string>
     <string>Holly</string>
@@ -8,9 +8,11 @@
     <string>Buzz</string>
     <string>Moose</string>
     <string>Christopher</string>
+    <string>Otis</string>
+    <string>Oscar</string>
     <string>Nathan</string>
-  </names>
-  <scores>
+  </Names>
+  <Scores>
     <int>960000</int>
     <int>55400</int>
     <int>42500</int>
@@ -18,7 +20,9 @@
     <int>26500</int>
     <int>26460</int>
     <int>25040</int>
+    <int>19680</int>
+    <int>19640</int>
     <int>-1000</int>
-  </scores>
-  <minScore>-1000</minScore>
+  </Scores>
+  <MinScore>-1000</MinScore>
 </HighscoreData>
