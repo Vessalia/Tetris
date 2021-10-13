@@ -31,7 +31,7 @@ namespace Tetris.Src
                 {false, false, false, false }
             };
 
-        private static bool[,] sShape =
+        private static readonly bool[,] sShape =
             {
                 {false, false, false, false },
                 {false, false, true, true },
@@ -39,7 +39,7 @@ namespace Tetris.Src
                 {false, false, false, false }
             };
 
-        private static bool[,] zShape =
+        private static readonly bool[,] zShape =
             {
                 {false, false, false, false },
                 {false, true, true, false },
@@ -47,7 +47,7 @@ namespace Tetris.Src
                 {false, false, false, false }
             };
 
-        private static bool[,] jShape =
+        private static readonly bool[,] jShape =
             {
                 {false, false, false, false },
                 {false, false, true, false },
@@ -55,7 +55,7 @@ namespace Tetris.Src
                 {false, true, true, false }
             };
 
-        private static bool[,] lShape =
+        private static readonly bool[,] lShape =
             {
                 {false, false, false, false },
                 {false, true, false, false },
@@ -71,39 +71,39 @@ namespace Tetris.Src
         private static readonly Color jColour = new Color(0, 0, 255);
         private static readonly Color lColour = new Color(255, 127, 0);
 
-        public static Block CreateIBlock(Location pos, Grid grid)
+        public static Block CreateIBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, iShape, iColour, grid);
+            return new Block(pos, iShape, iColour, grid, input);
         }
 
-        public static Block CreateOBlock(Location pos, Grid grid)
+        public static Block CreateOBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, oShape, oColour, grid);
+            return new Block(pos, oShape, oColour, grid, input);
         }
 
-        public static Block CreateTBlock(Location pos, Grid grid)
+        public static Block CreateTBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, tShape, tColour, grid);
+            return new Block(pos, tShape, tColour, grid, input);
         }
 
-        public static Block CreateSBlock(Location pos, Grid grid)
+        public static Block CreateSBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, sShape, sColour, grid);
+            return new Block(pos, sShape, sColour, grid, input);
         }
 
-        public static Block CreateZBlock(Location pos, Grid grid)
+        public static Block CreateZBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, zShape, zColour, grid);
+            return new Block(pos, zShape, zColour, grid, input);
         }
 
-        public static Block CreateJBlock(Location pos, Grid grid)
+        public static Block CreateJBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, jShape, jColour, grid);
+            return new Block(pos, jShape, jColour, grid, input);
         }
 
-        public static Block CreateLBlock(Location pos, Grid grid)
+        public static Block CreateLBlock(Location pos, Grid grid, Input input)
         {
-            return new Block(pos, lShape, lColour, grid);
+            return new Block(pos, lShape, lColour, grid, input);
         }
     }
 }

@@ -19,28 +19,28 @@ namespace Tetris.Src
 
         public Color[,] colours;
 
-        private readonly Location cellMN;
+        public Location CellMN { get; }
 
         private float timer;
-        private float blockClearTimer;
+        private readonly float blockClearTimer;
 
-        private bool clearing;
+        public bool Clearing { get; private set; }
 
-        private int score;
+        public int Score { get; private set; }
         private int level;
 
         public Grid(Location cellMN)
         {
-            this.cellMN = cellMN;
+            CellMN = cellMN;
 
             BuildGrid(cellMN);
 
             timer = 0;
             blockClearTimer = 1 / 6f;
 
-            clearing = false;
+            Clearing = false;
 
-            score = 0;
+            Score = 0;
             level = 1;
         }
 
@@ -65,15 +65,15 @@ namespace Tetris.Src
         {
             int cellLen = GetCellLen();
 
-            var borderPos = Constants.GridToScreenCoords(new Location(0, 0), cellMN);
+            var borderPos = Constants.GridToScreenCoords(new Location(0, 0), CellMN);
 
-            sb.DrawRectangle(borderPos.X, borderPos.Y, cellLen * cellMN.x, cellLen * cellMN.y, Color.White);
+            sb.DrawRectangle(borderPos.X, borderPos.Y, cellLen * CellMN.x, cellLen * CellMN.y, Color.White);
 
-            for (int i = 0; i < cellMN.x; i++)
+            for (int i = 0; i < CellMN.x; i++)
             {
-                for (int j = 0; j < cellMN.y; j++)
+                for (int j = 0; j < CellMN.y; j++)
                 {
-                    var screenPos = Constants.GridToScreenCoords(new Location(i, j), cellMN);
+                    var screenPos = Constants.GridToScreenCoords(new Location(i, j), CellMN);
 
                     sb.DrawRectangle(screenPos.X, screenPos.Y, cellLen, cellLen, Color.White);
 
@@ -89,7 +89,7 @@ namespace Tetris.Src
 
         public void SetCell(int i, int j, CellMembers cell, Color colour)
         {
-            if ((i < cellMN.x && i >= 0) && (j < cellMN.y && j >= 0))
+            if ((i < CellMN.x && i >= 0) && (j < CellMN.y && j >= 0))
             {
                 gridValues[i, j] = cell;
                 colours[i, j] = colour;
@@ -98,7 +98,7 @@ namespace Tetris.Src
 
         public CellMembers GetCell(int i, int j)
         {
-            if (i < 0 || j < 0 || i > cellMN.x - 1 || j > cellMN.y - 1)
+            if (i < 0 || j < 0 || i > CellMN.x - 1 || j > CellMN.y - 1)
             {
                 return CellMembers.wall;
             }
@@ -109,36 +109,31 @@ namespace Tetris.Src
         {
             int minDim;
             int minMN;
-            if (Constants.Screen.X / cellMN.x >= Constants.Screen.Y / cellMN.y)
+            if (Constants.Screen.X / CellMN.x >= Constants.Screen.Y / CellMN.y)
             {
                 minDim = (int)Constants.Screen.Y;
-                minMN = cellMN.y;
+                minMN = CellMN.y;
             }
             else
             {
                 minDim = (int)Constants.Screen.X;
-                minMN = cellMN.x;
+                minMN = CellMN.x;
             }
             return (int)MathF.Floor((float)minDim / minMN);
         }
 
-        public Location GetCellMN()
-        {
-            return cellMN;
-        }
-
         public bool InBounds(Location id)
         {
-            return 0 <= id.x && id.x < cellMN.x && 0 <= id.y && id.y < cellMN.y;
+            return 0 <= id.x && id.x < CellMN.x && 0 <= id.y && id.y < CellMN.y;
         }
 
         public void CheckLines(float dt)
         {
             var lines = new List<int>();
-            for (int j = 0; j < cellMN.y; j++)
+            for (int j = 0; j < CellMN.y; j++)
             {
                 int row = 0;
-                for (int i = 0; i < cellMN.x; i++)
+                for (int i = 0; i < CellMN.x; i++)
                 {
                     if (gridValues[i, j] == CellMembers.block)
                     {
@@ -146,7 +141,7 @@ namespace Tetris.Src
                     }
                 }
 
-                if (row == cellMN.x)
+                if (row == CellMN.x)
                 {
                     lines.Add(j);
                 }
@@ -166,7 +161,7 @@ namespace Tetris.Src
 
             if(timer > blockClearTimer)
             {
-                for (int j = cellMN.y - 1; j >= 0; j--)
+                for (int j = CellMN.y - 1; j >= 0; j--)
                 {
                     while (lines.Contains(j - clearedLines))
                     {
@@ -176,7 +171,7 @@ namespace Tetris.Src
                     int shiftedRow = j - clearedLines;
                     if (shiftedRow >= 0)
                     {
-                        for (int i = 0; i < cellMN.x; i++)
+                        for (int i = 0; i < CellMN.x; i++)
                         {
                             gridValues[i, j] = gridValues[i, shiftedRow];
                             colours[i, j] = colours[i, shiftedRow];
@@ -184,7 +179,7 @@ namespace Tetris.Src
                     }
                     else
                     {
-                        for (int i = 0; i < cellMN.x; i++)
+                        for (int i = 0; i < CellMN.x; i++)
                         {
                             gridValues[i, j] = CellMembers.empty;
                             colours[i, j] = Color.Transparent;
@@ -200,11 +195,11 @@ namespace Tetris.Src
             }
             else
             {
-                for (int j = cellMN.y; j >= 0; j--)
+                for (int j = CellMN.y; j >= 0; j--)
                 {
                     if (lines.Contains(j))
                     {
-                        for (int i = 0; i < cellMN.x; i++)
+                        for (int i = 0; i < CellMN.x; i++)
                         {
                             colours[i, j] = Color.White;
                         }
@@ -227,7 +222,7 @@ namespace Tetris.Src
 
         public void PlaceBlock(Block block)
         {
-            var shape = block.GetShape();
+            var shape = block.Shape;
 
             for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
             {
@@ -240,15 +235,10 @@ namespace Tetris.Src
                         int gridX = j + block.GetPos().x;
 
                         gridValues[gridX, gridY] = CellMembers.block;
-                        colours[gridX, gridY] = block.GetColour();
+                        colours[gridX, gridY] = block.Colour;
                     }
                 }
             }
-        }
-
-        public bool IsClearing()
-        {
-            return clearing;
         }
 
         private int ScoreGained(List<int> lines)
@@ -273,11 +263,6 @@ namespace Tetris.Src
             {
                 return 0;
             }
-        }
-
-        public int GetScore()
-        {
-            return score;
         }
 
         public int GetLevel()

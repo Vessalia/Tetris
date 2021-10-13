@@ -8,13 +8,13 @@ namespace Tetris.Src
 {
     public class AudioManager
     {
-        private Dictionary<string, Song> songs;
+        private readonly Dictionary<string, Song> songs;
         
         private string currSong;
 
-        public int masterVolume { get; private set; }
+        public int MasterVolume { get; private set; }
 
-        private FileManager<ConfigData> fileManager;
+        private readonly FileManager<ConfigData> fileManager;
 
         public AudioManager(ContentManager Content)
         {
@@ -28,7 +28,7 @@ namespace Tetris.Src
 
             fileManager = new FileManager<ConfigData>(Constants.configPath);
 
-            masterVolume = fileManager.LoadData().volume;
+            MasterVolume = fileManager.LoadData().volume;
         }
 
         public void Update() { }
@@ -56,18 +56,18 @@ namespace Tetris.Src
 
         public void IncrementVolume(int increment)
         {
-            int newVolume = masterVolume + increment;
-            masterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
+            int newVolume = MasterVolume + increment;
+            MasterVolume = (int)MathF.Max(MathF.Min(newVolume, 100), 0);
             MediaPlayer.Volume = InternalMasterVolume();
 
             ConfigData data = fileManager.LoadData();
             ConfigManager configManager = new ConfigManager(data);
-            configManager.SetVolume(masterVolume);
+            configManager.SetVolume(MasterVolume);
         }
 
         private float InternalMasterVolume()
         {
-            return masterVolume / 100f;
+            return MasterVolume / 100f;
         }
 
         public string GetCurrentSong()

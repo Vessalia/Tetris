@@ -7,37 +7,37 @@ namespace Tetris.Src
 {
     public class ConfigManager
     {
-        public ConfigData data { get; private set; }
+        public ConfigData Data { get; private set; }
 
-        private FileManager<ConfigData> fileManager;
+        private readonly FileManager<ConfigData> fileManager;
 
         public ConfigManager(ConfigData data)
         {
-            this.data = data;
+            this.Data = data;
 
             fileManager = new FileManager<ConfigData>(Constants.configPath);
         }
 
         public void SaveKeyBinding(string name, Keys key)
         {
-            for (int i = 0; i < data.keyNames.Count; i++)
+            for (int i = 0; i < Data.keyNames.Count; i++)
             {
-                if (name == data.keyNames[i])
+                if (name == Data.keyNames[i])
                 {
-                    data.keyBindings[i] = key;
+                    Data.keyBindings[i] = key;
                 }
             }
 
-            fileManager.SaveData(data);
+            fileManager.SaveData(Data);
         }
 
         public Keys GetKeyBinding(string name)
         {
-            for (int i = 0; i < data.keyNames.Count; i++)
+            for (int i = 0; i < Data.keyNames.Count; i++)
             {
-                if (name.Equals(data.keyNames[i]))
+                if (name.Equals(Data.keyNames[i]))
                 {
-                    return data.keyBindings[i];
+                    return Data.keyBindings[i];
                 }
             }
 
@@ -46,9 +46,9 @@ namespace Tetris.Src
 
         public void SetVolume(int volume)
         {
-            data.volume = volume;
+            Data.volume = volume;
 
-            fileManager.SaveData(data);
+            fileManager.SaveData(Data);
         }
     }
 }

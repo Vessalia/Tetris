@@ -7,41 +7,40 @@ namespace Tetris.Src
     [Serializable]
     public class HighscoreData
     {
-        public List<string> names { get; set; }
-        public List<int> scores { get; set; }
-        public int minScore { get; set; }
+        public List<string> Names { get; set; }
+        public List<int> Scores { get; set; }
         public int Count
         {
-            get { return names.Count; }
+            get { return Names.Count; }
         }
 
         public HighscoreData()
         {
-            names = new List<string>();
-            scores = new List<int>();
+            Names = new List<string>();
+            Scores = new List<int>();
         }
 
         public void SortData()
         {
-            minScore = int.MaxValue;
-            for (int i = 1; i < scores.Count; i++)
+            var minScore = int.MaxValue;
+            for (int i = 1; i < Scores.Count; i++)
             {
-                if (scores[i - 1] < scores[i])
+                if (Scores[i - 1] < Scores[i])
                 {
                     for (int j = i; j > 0; j--)
                     {
-                        int tempScore = scores[j];
-                        scores[j] = scores[j - 1];
-                        scores[j - 1] = tempScore;
+                        int tempScore = Scores[j];
+                        Scores[j] = Scores[j - 1];
+                        Scores[j - 1] = tempScore;
 
-                        string tempName = names[j];
-                        names[j] = names[j - 1];
-                        names[j - 1] = tempName;
+                        string tempName = Names[j];
+                        Names[j] = Names[j - 1];
+                        Names[j - 1] = tempName;
                     }
                 }
-                if (scores[scores.Count - 1] < minScore)
+                if (Scores[^1] < minScore)
                 {
-                    minScore = scores[scores.Count - 1];
+                    minScore = Scores[^1];
                 }
             }
         }

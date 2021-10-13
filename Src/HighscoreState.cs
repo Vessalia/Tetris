@@ -9,9 +9,9 @@ namespace Tetris.Src
 {
     class HighscoreState : GameState
     {
-        private HighscoreData data;
+        private readonly HighscoreData data;
 
-        private Menu menu;
+        private readonly Menu menu;
 
         public HighscoreState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
@@ -52,14 +52,14 @@ namespace Tetris.Src
         {
             var text = "Highscores";
             var textSize = fonts["title"].MeasureString(text);
-            sb.DrawString(fonts["title"], text, new Vector2(Constants.Screen.X / 2, Constants.Screen.Y / 7.2f) - textSize / 2, Color.IndianRed);
+            sb.DrawString(fonts["title"], text, new Vector2(Constants.Screen.X / 2, Constants.Screen.Y / 7.2f) - textSize / 2, Color.Aqua);
 
             float posX = Constants.Screen.X / 4;
             float posY = Constants.Screen.Y / 5;
             float spacing = Constants.Screen.Y / 10;
-            for (int i = 0; i < data.names.Count; i++)
+            for (int i = 0; i < data.Names.Count; i++)
             {
-                var scoreText = $"{data.names[i]}" + ": " + $"{data.scores[i]}";
+                var scoreText = $"{data.Names[i]}" + ": " + $"{data.Scores[i]}";
                 var scoreTextSize = fonts["default"].MeasureString(scoreText);
 
                 if (i % 4 == 0 && i != 0)
@@ -70,7 +70,7 @@ namespace Tetris.Src
 
                 posY += spacing;
 
-                sb.DrawString(fonts["default"], scoreText, new Vector2(posX, posY) - textSize / 2, Color.IndianRed);
+                sb.DrawString(fonts["default"], scoreText, new Vector2(posX, posY) - scoreTextSize / 2, Color.Aqua);
             }
         }
     }

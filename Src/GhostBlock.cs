@@ -9,10 +9,10 @@ namespace Tetris.Src
 {
     class GhostBlock
     {
-        private Block block;
-        private Grid grid;
+        private readonly Block block;
+        private readonly Grid grid;
 
-        private bool[,] shape;
+        private bool[,] Shape;
 
         private Location pos;
 
@@ -21,27 +21,27 @@ namespace Tetris.Src
             this.block = block;
             this.grid = grid;
 
-            shape = block.GetShape();
+            Shape = block.Shape;
 
             pos = new Location(block.GetPos().x, 0);
         }
 
         public void Update()
         {
-            shape = block.GetShape();
+            Shape = block.Shape;
             pos.x = block.GetPos().x;
             pos.y = GetPosY();
         }
 
         public void Draw(SpriteBatch sb)
         {
-            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (shape[j, i])
+                    if (Shape[j, i])
                     {
-                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.GetCellMN());
+                        Vector2 drawPos = Constants.GridToScreenCoords(new Location(pos.x + i, pos.y + j), grid.cellMN);
                         sb.DrawRectangle(drawPos, new Size2(grid.GetCellLen(), grid.GetCellLen()), Color.LightBlue, 10);
                     }
                 }
@@ -78,11 +78,11 @@ namespace Tetris.Src
 
         private bool BlockCollisionCheck()
         {
-            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (shape[j, i])
+                    if (Shape[j, i])
                     {
                         Location cellPos = new Location(pos.x + i, pos.y + j);
 
@@ -99,11 +99,11 @@ namespace Tetris.Src
 
         private bool CollisionCheck()
         {
-            for (int i = 0; i < shape.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < Shape.GetUpperBound(0) + 1; i++)
             {
-                for (int j = 0; j < shape.GetUpperBound(1) + 1; j++)
+                for (int j = 0; j < Shape.GetUpperBound(1) + 1; j++)
                 {
-                    if (shape[j, i])
+                    if (Shape[j, i])
                     {
                         if (!grid.InBounds(new Location(pos.x + i, pos.y + j)))
                         {

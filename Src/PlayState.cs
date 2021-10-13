@@ -11,20 +11,20 @@ namespace Tetris.Src
 {
     class PlayState : GameState
     {
-        private Grid grid;
+        private readonly Grid grid;
 
-        private List<Block> blocks;
+        private readonly List<Block> blocks;
 
         private Block activeBlock, nextBlock, heldBlock, tempBlock;
 
         private GhostBlock ghostBlock;
 
-        private Controller controller;
+        private readonly Controller controller;
 
         private bool blockRefresh;
         private bool heldBlockCooldown;
 
-        private Random randInt;
+        private readonly Random randInt;
 
         private float timer;
         private bool isGameOver;
@@ -32,8 +32,8 @@ namespace Tetris.Src
         private int score;
         private int level;
 
-        private ConfigManager configManager;
-        private ConfigData data;
+        private readonly ConfigManager configManager;
+        private readonly ConfigData data;
 
         public PlayState(IGameStateSwitcher switcher, Input input, AudioManager audioManager) : base(switcher, input, audioManager)
         {
@@ -45,13 +45,13 @@ namespace Tetris.Src
 
             grid = new Grid(new Location(10, 20));
 
-            Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block oBlock = ShapeBuilder.CreateOBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block tBlock = ShapeBuilder.CreateTBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block sBlock = ShapeBuilder.CreateSBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block zBlock = ShapeBuilder.CreateZBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block jBlock = ShapeBuilder.CreateJBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
-            Block lBlock = ShapeBuilder.CreateLBlock(new Location(grid.GetCellMN().x / 2 - 2, 0), grid);
+            Block iBlock = ShapeBuilder.CreateIBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block oBlock = ShapeBuilder.CreateOBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block tBlock = ShapeBuilder.CreateTBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block sBlock = ShapeBuilder.CreateSBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block zBlock = ShapeBuilder.CreateZBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block jBlock = ShapeBuilder.CreateJBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
+            Block lBlock = ShapeBuilder.CreateLBlock(new Location(grid.CellMN.x / 2 - 2, 0), grid, input);
 
             blocks = new List<Block>
             {
@@ -115,7 +115,7 @@ namespace Tetris.Src
 
             activeBlock.LevelSpeedUp(level);
 
-            if (!grid.IsClearing())
+            if (!grid.Clearing)
             {
                 activeBlock.Update(dt);
                 ghostBlock.Update();
@@ -149,11 +149,11 @@ namespace Tetris.Src
                 ghostBlock = new GhostBlock(activeBlock, grid);
             }
 
-            if (!activeBlock.IsBlockLive())
+            if (!activeBlock.IsBlockLive() && !activeBlock.IsBlockPlacing())
             {
                 grid.PlaceBlock(activeBlock);
 
-                isGameOver = activeBlock.IsGameOver();
+                isGameOver = activeBlock.IsGameOver;
 
                 if (!isGameOver)
                 {
@@ -174,7 +174,7 @@ namespace Tetris.Src
             }
 
             grid.CheckLines(dt);
-            score = grid.GetScore();
+            score = grid.Score;
             level = grid.GetLevel();
         }
 
@@ -183,22 +183,22 @@ namespace Tetris.Src
             grid.DrawGrid(sb);
 
             var nextText = "Next Block";
-            var nextTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, 0);
+            var nextTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.CellMN.x) / 2, 0);
             sb.DrawString(fonts["default"], nextText, nextTextVec, Color.Blue);
 
             var holdText = "Held Block";
             var holdTextSize = fonts["default"].MeasureString(holdText);
-            var holdTextVec = new Vector2((Constants.Screen.X - grid.GetCellLen() * grid.GetCellMN().x) / 2 - holdTextSize.X, 0);
+            var holdTextVec = new Vector2((Constants.Screen.X - grid.GetCellLen() * grid.CellMN.x) / 2 - holdTextSize.X, 0);
             sb.DrawString(fonts["default"], holdText, holdTextVec, Color.Orange);
 
             var scoreText = "Score: " + $"{score}";
             var scoreTextSize = fonts["default"].MeasureString(scoreText);
-            var scoreTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, Constants.Screen.Y - scoreTextSize.Y);
+            var scoreTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.CellMN.x) / 2, Constants.Screen.Y - scoreTextSize.Y);
             sb.DrawString(fonts["default"], scoreText, scoreTextVec, Color.Crimson);
 
             var levelText = "Level: " + $"{level}";
             var levelTextSize = fonts["default"].MeasureString(scoreText);
-            var levelTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.GetCellMN().x) / 2, Constants.Screen.Y - scoreTextSize.Y - levelTextSize.Y);
+            var levelTextVec = new Vector2((Constants.Screen.X + grid.GetCellLen() * grid.CellMN.x) / 2, Constants.Screen.Y - scoreTextSize.Y - levelTextSize.Y);
             sb.DrawString(fonts["default"], levelText, levelTextVec, Color.MistyRose);
 
             if (isGameOver)
@@ -211,16 +211,16 @@ namespace Tetris.Src
                 return;
             }
 
-            if (!grid.IsClearing())
+            if (!grid.Clearing)
             {
                 activeBlock.Draw(sb);
-                nextBlock.Draw(sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, 2);
+                nextBlock.Draw(sb, (grid.CellMN + nextBlock.GetShapeMN()).x / 2, 2);
 
                 ghostBlock.Draw(sb);
             }
             else
             {
-                activeBlock.Draw(sb, (grid.GetCellMN() + nextBlock.GetShapeMN()).x / 2, 2);
+                activeBlock.Draw(sb, (grid.CellMN + nextBlock.GetShapeMN()).x / 2, 2);
             }
 
             if (heldBlock != null)

@@ -12,7 +12,7 @@ namespace Tetris.Src
 {
     public class Game1 : Game, IGameStateSwitcher
     {
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Dictionary<string, SpriteFont> fonts;
 
@@ -110,29 +110,29 @@ namespace Tetris.Src
             {
                 HighscoreData data = new HighscoreData();
 
-                data.names.Add("Cooper");
-                data.scores.Add(960000);
+                data.Names.Add("Cooper");
+                data.Scores.Add(960000);
 
-                data.names.Add("Daniel");
-                data.scores.Add(55400);
+                data.Names.Add("Daniel");
+                data.Scores.Add(55400);
 
-                data.names.Add("Holly");
-                data.scores.Add(42500);
+                data.Names.Add("Holly");
+                data.Scores.Add(42500);
 
-                data.names.Add("Boomer");
-                data.scores.Add(40300);
+                data.Names.Add("Boomer");
+                data.Scores.Add(40300);
 
-                data.names.Add("Buzz");
-                data.scores.Add(26500);
+                data.Names.Add("Buzz");
+                data.Scores.Add(26500);
 
-                data.names.Add("Moose");
-                data.scores.Add(26460);
+                data.Names.Add("Moose");
+                data.Scores.Add(26460);
 
-                data.names.Add("Christopher");
-                data.scores.Add(25040);
+                data.Names.Add("Christopher");
+                data.Scores.Add(25040);
 
-                data.names.Add("Nathan");
-                data.scores.Add(-1000);
+                data.Names.Add("Nathan");
+                data.Scores.Add(-1000);
 
                 data.SortData();
 
