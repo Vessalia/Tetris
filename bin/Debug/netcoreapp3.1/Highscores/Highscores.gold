@@ -10,7 +10,7 @@
     <string>Christopher</string>
     <string>Otis</string>
     <string>Oscar</string>
-    <string>Nathan</string>
+    <string>Poopy</string>
   </Names>
   <Scores>
     <int>960000</int>
@@ -22,7 +22,7 @@
     <int>25040</int>
     <int>19680</int>
     <int>19640</int>
-    <int>-1000</int>
+    <int>6160</int>
   </Scores>
-  <MinScore>-1000</MinScore>
+  <MinScore>6160</MinScore>
 </HighscoreData>
